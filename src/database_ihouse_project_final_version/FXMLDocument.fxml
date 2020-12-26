@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="743.0" prefWidth="1191.0" style="-fx-background-color: #f1f3f8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="database_ihouse_project_final_version.FXMLDocumentController">
+   <children>
+      <VBox prefHeight="838.0" prefWidth="318.0" style="-fx-background-color: #393e46;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="873.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label prefHeight="58.0" prefWidth="299.0" text="iHouse" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/apple_logo_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Bookman Old Style" size="31.0" />
+               </font>
+               <padding>
+                  <Insets bottom="50.0" left="30.0" top="20.0" />
+               </padding>
+            </Label>
+            <JFXButton fx:id="btnAddNewCase" onAction="#btnAddNewCaseClicked" prefHeight="64.0" prefWidth="249.0" text=" Add a New Case" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/add_key_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnPay" onAction="#btnPayClicked" prefHeight="52.0" prefWidth="152.0" text=" Pay" textFill="WHITE">
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/pay_64px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnPaymentHistory" onAction="#btnPaymentHistoryClicked" prefHeight="53.0" prefWidth="261.0" text=" Payment History" textFill="WHITE">
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/order_history_64px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnActiveRepairJobs" onAction="#btnActiveRepairJobsClicked" prefHeight="58.0" prefWidth="265.0" text=" Active Repair Jobs" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/in_progress_80px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnRepairJobsArchive" onAction="#btnRepairJobsArchiveClicked" prefHeight="60.0" prefWidth="272.0" text=" Repair Jobs Archive" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/archive_80px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnRequestReplacementPart" onAction="#btnRequestReplacementPartClicked" prefHeight="61.0" prefWidth="307.0" text=" Request Peplacemet Part" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/request_service_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnMyEmployees" onAction="#btnMyEmployeesClicked" prefHeight="56.0" prefWidth="229.0" text=" My Employees" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/worker_80px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnMyCustomers" onAction="#btnMyCustomersClicked" prefHeight="56.0" prefWidth="229.0" text=" My Customers" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/customer_80px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnSettings" onAction="#btnSettingsClicked" prefHeight="51.0" prefWidth="174.0" text=" Settings" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/settings_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Baskerville Old Face" size="20.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <Label fx:id="labelGreeting" layoutX="622.0" layoutY="132.0" prefHeight="36.0" prefWidth="318.0" text="GOOD MORNING!" textAlignment="CENTER">
+         <font>
+            <Font name="Century Schoolbook" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelDate" layoutX="709.0" layoutY="186.0" prefHeight="23.0" prefWidth="97.0" text="12">
+         <font>
+            <Font name="Calisto MT Italic" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
