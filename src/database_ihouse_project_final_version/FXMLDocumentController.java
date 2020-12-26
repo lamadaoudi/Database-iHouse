@@ -11,7 +11,13 @@ import java.util.Calendar;
 import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
@@ -63,7 +69,20 @@ public class FXMLDocumentController {
     }
 
     @FXML
-    private void btnAddNewCaseClicked(ActionEvent event) {
+    private void btnAddNewCaseClicked(ActionEvent event) throws Exception{
+        final Stage primaryStage2 = new Stage();
+        primaryStage2.initModality(Modality.APPLICATION_MODAL);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //System.out.println("Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();");
+        primaryStage2.initOwner(app_stage);
+        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("AddRepairCustomer.fxml"));
+        //System.out.println("Parent nextSceneParent = FXMLLoader.load(getClass().getResource(\"FXMLDocument.fxml\"));");
+        Scene scene11 = new Scene(nextSceneParent);
+        //System.out.println("Scene scene11 = new Scene(nextSceneParent);");
+        primaryStage2.setScene(scene11);
+        //System.out.println("primaryStage2.setScene(scene11);");
+        primaryStage2.show();
+        //System.out.println(" primaryStage2.show();");
     }
 
     @FXML
