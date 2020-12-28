@@ -15,19 +15,14 @@ package database_ihouse_project_final_version;
  * and open the template in the editor.
  */
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Properties;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import javafx.scene.control.Alert;
 
 public class MyConnection {
         
@@ -79,11 +74,13 @@ public class MyConnection {
             stmt.executeUpdate(SQL);
             stmt.close();
 
-        } catch (SQLException s) {
+        }
+        catch (SQLException s) {
             s.printStackTrace();
             System.out.println("SQL statement is not executed!");
-
+            
         }
+
 
     }
            
