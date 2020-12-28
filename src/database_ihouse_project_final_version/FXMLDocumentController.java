@@ -51,6 +51,8 @@ public class FXMLDocumentController {
     @FXML
     private JFXButton btnSettings;
     @FXML
+    private JFXButton btnSendToAppleBranch;
+    @FXML
     void initialize() {
         Calendar c = Calendar.getInstance();
         System.out.println(c);
@@ -60,7 +62,6 @@ public class FXMLDocumentController {
                       
         else if(timeOfDay >= 12 && timeOfDay < 16)
             labelGreeting.setText("GOOD AFTERNOON!");
-        
         else
             labelGreeting.setText("GOOD EVENING!");
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -73,16 +74,11 @@ public class FXMLDocumentController {
         final Stage primaryStage2 = new Stage();
         primaryStage2.initModality(Modality.APPLICATION_MODAL);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //System.out.println("Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();");
         primaryStage2.initOwner(app_stage);
         Parent nextSceneParent = FXMLLoader.load(getClass().getResource("AddRepairCustomer.fxml"));
-        //System.out.println("Parent nextSceneParent = FXMLLoader.load(getClass().getResource(\"FXMLDocument.fxml\"));");
         Scene scene11 = new Scene(nextSceneParent);
-        //System.out.println("Scene scene11 = new Scene(nextSceneParent);");
         primaryStage2.setScene(scene11);
-        //System.out.println("primaryStage2.setScene(scene11);");
         primaryStage2.show();
-        //System.out.println(" primaryStage2.show();");
     }
 
     @FXML
@@ -102,7 +98,15 @@ public class FXMLDocumentController {
     }
 
     @FXML
-    private void btnRequestReplacementPartClicked(ActionEvent event) {
+    private void btnRequestReplacementPartClicked(ActionEvent event) throws Exception {
+        final Stage primaryStage2 = new Stage();
+        primaryStage2.initModality(Modality.APPLICATION_MODAL);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage2.initOwner(app_stage);
+        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("RequestReplacementPart.fxml"));
+        Scene scene11 = new Scene(nextSceneParent);
+        primaryStage2.setScene(scene11);
+        primaryStage2.show();
     }
 
     @FXML
@@ -115,5 +119,9 @@ public class FXMLDocumentController {
 
     @FXML
     private void btnSettingsClicked(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnSendToAppleBranchClicked(ActionEvent event) {
     }
 }

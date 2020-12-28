@@ -12,9 +12,6 @@ import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
-import com.sun.net.httpserver.Authenticator;
-import com.sun.source.doctree.DocTree;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,10 +24,10 @@ import javafx.scene.control.Label;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,7 +37,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.converter.DoubleStringConverter;
+import javafx.util.Duration;
 import javafx.util.converter.IntegerStringConverter;
 
 /**
@@ -176,6 +173,11 @@ public class AddRepairCustomerController implements Initializable {
         tab2.setDisable(true);
         tab3.setDisable(true);
         tab4.setDisable(true);
+        fadeIn.setNode(labelRegistered);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.setCycleCount(1);
+        fadeIn.setAutoReverse(false);
         // Tab 2
         labelProblem2.setVisible(false);
         taProblem2.setVisible(false);
@@ -212,12 +214,14 @@ public class AddRepairCustomerController implements Initializable {
             if (searchResult.size() != 0) {
                 labelRegistered.setText("It seems that this customer is already registered, click continue...");
                 labelRegistered.setVisible(true);
+                fadeIn.playFromStart();
                 alreadyRegisteredCustomer = true;
             } else {
                 vboxLabelsCustomerInfo.setVisible(true);
                 vBoxTextFieldsCustomersInfo.setVisible(true);
                 labelRegistered.setText("Thank you for choosing iHouse");
                 labelRegistered.setVisible(true);
+                fadeIn.playFromStart();
                 btnAddPhoneNum.setVisible(true);
             }
         } catch (NumberFormatException e) {
@@ -658,6 +662,8 @@ public class AddRepairCustomerController implements Initializable {
             /**
      * ************************************************************************************************ TAB 4 DONE *******************************************************************************
      */
-   
+   private FadeTransition fadeIn = new FadeTransition(
+        Duration.millis(300)
+    );
       
 }
