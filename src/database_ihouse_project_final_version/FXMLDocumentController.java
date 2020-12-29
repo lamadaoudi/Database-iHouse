@@ -90,7 +90,15 @@ public class FXMLDocumentController {
     }
 
     @FXML
-    private void btnActiveRepairJobsClicked(ActionEvent event) {
+    private void btnActiveRepairJobsClicked(ActionEvent event) throws Exception{
+        final Stage primaryStage2 = new Stage();
+        primaryStage2.initModality(Modality.APPLICATION_MODAL);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage2.initOwner(app_stage);
+        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("ActiveRepairJobs.fxml"));
+        Scene scene11 = new Scene(nextSceneParent);
+        primaryStage2.setScene(scene11);
+        primaryStage2.show();
     }
 
     @FXML
