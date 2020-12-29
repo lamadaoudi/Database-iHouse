@@ -80,20 +80,17 @@ public class ActiveRepairJobsController implements Initializable {
                     return true;
                 }
 
-                // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (repairjob.getBranch_no().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                if ( repairjob.getBranch_no()!=null && repairjob.getBranch_no().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;
-                } else if (repairjob.getClosed_date().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                } else if (repairjob.getJob_status() != null && repairjob.getJob_status().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;
-                } else if (repairjob.getJob_status().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                } else if (repairjob.getRecieved_date()!=null && repairjob.getRecieved_date().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;
-                } else if (repairjob.getRecieved_date().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                } else if (repairjob.getRepair_id()!=null && repairjob.getRepair_id().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;
-                } else if (repairjob.getRepair_id().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                    return true;
-                } else if (repairjob.getTechnician_id().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                } else if (repairjob.getTechnician_id()!=null && repairjob.getTechnician_id().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;
                 } else {
                     return false; // Does not match.
@@ -143,8 +140,8 @@ public class ActiveRepairJobsController implements Initializable {
         col_job_status.setCellValueFactory(new PropertyValueFactory<RepairJob, String>("Job_status"));
         col_technician_id.setCellValueFactory(new PropertyValueFactory<RepairJob, String>("Technician_id"));
         col_branch_no.setCellValueFactory(new PropertyValueFactory<RepairJob, String>("Branch_no"));
-        tvActiveRepairJobs.setItems(dataList);
-        //search();
+        //tvActiveRepairJobs.setItems(dataList);
+        search();
         System.out.println("We're here now");
     }
 

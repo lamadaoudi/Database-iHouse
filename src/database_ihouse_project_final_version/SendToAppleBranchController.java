@@ -99,12 +99,12 @@ public class SendToAppleBranchController implements Initializable {
 				// Compare first name and last name of every person with filter text.
 				String lowerCaseFilter = newValue.toLowerCase();
 				
-				if (applebranch.getContactInfo().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+				if (applebranch.getContactInfo()!=null && applebranch.getContactInfo().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
 					return true; // Filter matches first name.
-				} else if (applebranch.getLocation().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+				} else if (applebranch.getLocation()!=null && applebranch.getLocation().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true; // Filter matches last name.
 				}
-				else if (String.valueOf(applebranch.getBranch_no()).indexOf(lowerCaseFilter)!=-1)
+				else if ( String.valueOf(applebranch.getBranch_no()).indexOf(lowerCaseFilter)!=-1)
 				     return true;
 				     else  
 				    	 return false; // Does not match.

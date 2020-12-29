@@ -25,7 +25,6 @@ import javafx.stage.Stage;
  */
 //package database_ihouse_project_final_version;
 
-
 public class FXMLDocumentController {
 
     @FXML
