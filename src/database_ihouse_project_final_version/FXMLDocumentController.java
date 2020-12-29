@@ -52,6 +52,9 @@ public class FXMLDocumentController {
     @FXML
     private JFXButton btnSendToAppleBranch;
     @FXML
+    private JFXButton btnWarehouse;
+    
+    @FXML
     void initialize() {
         Calendar c = Calendar.getInstance();
         System.out.println(c);
@@ -135,6 +138,18 @@ public class FXMLDocumentController {
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         primaryStage2.initOwner(app_stage);
         Parent nextSceneParent = FXMLLoader.load(getClass().getResource("SendToAppleBranch.fxml"));
+        Scene scene11 = new Scene(nextSceneParent);
+        primaryStage2.setScene(scene11);
+        primaryStage2.show();
+    }
+
+    @FXML
+    private void btnWarehouseClicked(ActionEvent event) throws Exception{
+        final Stage primaryStage2 = new Stage();
+        primaryStage2.initModality(Modality.APPLICATION_MODAL);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage2.initOwner(app_stage);
+        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("Warehouse.fxml"));
         Scene scene11 = new Scene(nextSceneParent);
         primaryStage2.setScene(scene11);
         primaryStage2.show();
