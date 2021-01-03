@@ -202,7 +202,7 @@ public class ActiveRepairJobsController implements Initializable {
             if (searchResult.size() == 0) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Invalid Value Entered");
-                alert.setContentText("Could find repair job in database. Please enter a valid Repair_ID");
+                alert.setContentText("Could find tachnician id in database. Please enter a valid Technician_ID");
                 alert.showAndWait();
                 getDataJobs();
                 showDataJobs();

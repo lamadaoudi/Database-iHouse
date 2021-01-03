@@ -2,7 +2,11 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -162,15 +166,48 @@
             </JFXButton>
          </children>
       </VBox>
-      <Label fx:id="labelGreeting" layoutX="622.0" layoutY="132.0" prefHeight="36.0" prefWidth="318.0" text="GOOD MORNING!" textAlignment="CENTER">
+      <Label fx:id="labelGreeting" layoutX="623.0" layoutY="50.0" prefHeight="36.0" prefWidth="318.0" text="GOOD MORNING!" textAlignment="CENTER">
          <font>
             <Font name="Century Schoolbook" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="labelDate" layoutX="709.0" layoutY="186.0" prefHeight="23.0" prefWidth="97.0" text="12">
+      <Label fx:id="labelDate" layoutX="716.0" layoutY="112.0" prefHeight="23.0" prefWidth="97.0" text="12">
          <font>
             <Font name="Calisto MT Italic" size="18.0" />
          </font>
       </Label>
+      <BarChart fx:id="RepairJobsChart" layoutX="480.0" layoutY="398.0" legendVisible="false" prefHeight="312.0" prefWidth="569.0" stylesheets="@../StyleSheets/barChart.css">
+        <xAxis>
+          <CategoryAxis label="Month" side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" label="Total Repair Jobs" side="LEFT" />
+        </yAxis>
+         <effect>
+            <Blend />
+         </effect>
+      </BarChart>
+      <Label layoutX="1018.0" layoutY="701.0" prefHeight="17.0" prefWidth="159.0" text="iHouse | All rights reserved" textFill="#110909">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="664.0" layoutY="398.0" text="Total Repair Jobs Recieved per Month">
+         <font>
+            <Font name="Book Antiqua" size="14.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="1056.0" layoutY="36.0" onAction="#refrechClicked" text="REFRESH">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/refresh_80px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
