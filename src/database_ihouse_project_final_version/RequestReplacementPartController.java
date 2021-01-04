@@ -150,7 +150,7 @@ public class RequestReplacementPartController implements Initializable {
                 System.out.println("The amount is increased by one");
             }
             else{
-                SQL = "insert into RepNeedsRep (repair_id, serial_no) values ('"+repairID+"',"+serialNo+");";   
+                SQL = "insert into RepNeedsRep (repair_id, serial_no) values ("+repairID+",'"+serialNo+"');";   
                 MyConnection.ExecuteStatement(SQL);
             }
             
@@ -166,7 +166,7 @@ public class RequestReplacementPartController implements Initializable {
         String SQL;
         MyConnection.connectDB();
         System.out.println("Connection \n\n\n");
-        SQL = "select R.repair_id from repairJob R where R.repair_id=" + id;
+        SQL = "select R.repair_id from repairJob R where R.job_status <> 'finished' AND R.job_status<>'closed' AND R.repair_id=" + id;
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {

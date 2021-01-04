@@ -32,7 +32,6 @@ import javafx.stage.Stage;
  *
  * @author Main
  */
-//package database_ihouse_project_final_version;
 
 public class FXMLDocumentController {
 
@@ -133,7 +132,21 @@ public class FXMLDocumentController {
 
     @FXML
     private void btnPayClicked(ActionEvent event) {
-    }
+             Parent root;
+            try{ 
+             //System.out.println("database_ihouse_project_final_version.FXMLDocumentController.btnPayClicked()");
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PayFXML.fxml"));
+
+            Parent root1 = (Parent) fxmlLoader.load();
+              Stage stage = new Stage();
+              stage.setScene(new Scene(root1));  
+              stage.show();
+            }
+          catch(Exception e) {
+              e.printStackTrace();
+          }
+
+          }
 
     @FXML
     private void btnPaymentHistoryClicked(ActionEvent event) {

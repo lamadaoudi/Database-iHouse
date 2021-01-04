@@ -190,7 +190,7 @@ public class SendToAppleBranchController implements Initializable {
         String SQL;
         MyConnection.connectDB();
         System.out.println("Connection \n\n\n");
-        SQL = "select R.repair_id from repairJob R where R.repair_id=" + id;
+        SQL = "select R.repair_id from repairJob R where R.job_status <> 'finished' AND R.job_status<>'closed' AND R.repair_id=" + id;
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {
@@ -220,6 +220,10 @@ public class SendToAppleBranchController implements Initializable {
                 String SQL = "update repairJob R set R.branch_no=" + branch_no + " where R.repair_id=" + currentRepairID + ";";
                 MyConnection.ExecuteStatement(SQL);
                 MyConnection.con.close();
+                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Branch Requested");
+            alert.setContentText("Repair Job sent to the Apple Branch");
+            alert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Invalid Value Entered");

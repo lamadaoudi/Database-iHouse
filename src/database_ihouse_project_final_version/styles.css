@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 26, 2020, 4:43:10 PM
+    Author     : Main
+*/
+
+.tab-header-background {
+    -fx-background-color:  #393e46;
+    
+}
+.text-field{
+   font-family: 'Book Antiqua', arial;
+}
+.radio-button .radio{
+-fx-border-width     : 1px   ;
+-fx-border-color     :  #fcf876  ;
+-fx-background-color :   #393e46 ;
+-fx-background-image : null  ;
+-fx-border-radius: 15px;
+    -fx-padding: 2px;
+}
+.radio-button .radio:selected{
+-fx-background-color : white ;
+-fx-background-image : null  ;
+}
+.radio-button -radio:armed{
+-fx-background-color : white ;
+-fx-background-image : null  ;
+}
+.radio-button -radio:determinate{
+-fx-background-color : white ;
+-fx-background-image : null  ;
+}
+.radio-button -radio:indeterminate{
+-fx-background-color : white ;
+-fx-background-image : null  ;
+}
+.red-radio-button .dot {
+  -fx-mark-highlight-color: red ;
+  -fx-mark-color: red ;
+}

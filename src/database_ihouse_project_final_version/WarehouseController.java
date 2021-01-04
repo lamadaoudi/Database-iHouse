@@ -288,7 +288,7 @@ public class WarehouseController implements Initializable {
             String compatability = tfCompatability.getText();
             MyConnection.connectDB();
             System.out.println("Connection \n\n\n");
-            String SQL = "select * from replacement_parts where serial_No=" + serialNo + ";";
+            String SQL = "select * from replacement_parts where serial_No='" + serialNo + "';";
             Statement stmt = MyConnection.con.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
             try {
