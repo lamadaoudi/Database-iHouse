@@ -286,7 +286,7 @@ public class PayFXMLController implements Initializable {
                 try {
                     while (rs2.next()) {
                         test2 = Integer.parseInt(rs2.getString(1));
-
+                       
                     }
 
                 } catch (SQLException e) {
@@ -412,6 +412,7 @@ public class PayFXMLController implements Initializable {
         MyConnection.connectDB();
         RepID = data.get(0).getRepID();
         String SQL;
+        
         SQL = "select sum((RP.price*RN.amount))\n"
                 + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
                 + "where j.repair_id=RN.repair_id\n"
@@ -421,8 +422,9 @@ public class PayFXMLController implements Initializable {
         ResultSet rs = stmt1.executeQuery(SQL);
         try {
             while (rs.next()) {
+               if(rs.getString(1)!=null){
                 PartsCost = Double.parseDouble(rs.getString(1));
-                System.out.println(PartsCost);
+                }
             }
         } catch (SQLException e1) {
 
@@ -465,10 +467,12 @@ public class PayFXMLController implements Initializable {
                 + "and j.repair_id=" + data.get(1).getRepID() + ";";
         Statement stmt1 = MyConnection.con.createStatement();
         ResultSet rs = stmt1.executeQuery(SQL);
+    
         try {
             while (rs.next()) {
+                if(rs.getString(1)!=null){
                 PartsCost = Double.parseDouble(rs.getString(1));
-                System.out.println(PartsCost);
+                }
             }
         } catch (SQLException e1) {
 
@@ -513,8 +517,9 @@ public class PayFXMLController implements Initializable {
         ResultSet rs = stmt1.executeQuery(SQL);
         try {
             while (rs.next()) {
+                if(rs.getString(1)!=null){
                 PartsCost = Double.parseDouble(rs.getString(1));
-                System.out.println(PartsCost);
+                }
             }
         } catch (SQLException e1) {
 
@@ -559,8 +564,9 @@ public class PayFXMLController implements Initializable {
         ResultSet rs = stmt1.executeQuery(SQL);
         try {
             while (rs.next()) {
+                if(rs.getString(1)!=null){
                 PartsCost = Double.parseDouble(rs.getString(1));
-                System.out.println(PartsCost);
+                }
             }
         } catch (SQLException e1) {
 
@@ -605,8 +611,9 @@ public class PayFXMLController implements Initializable {
         ResultSet rs = stmt1.executeQuery(SQL);
         try {
             while (rs.next()) {
+                if(rs.getString(1)!=null){
                 PartsCost = Double.parseDouble(rs.getString(1));
-                System.out.println(PartsCost);
+                }
             }
         } catch (SQLException e1) {
 
@@ -651,8 +658,9 @@ public class PayFXMLController implements Initializable {
         ResultSet rs = stmt1.executeQuery(SQL);
         try {
             while (rs.next()) {
+                if(rs.getString(1)!=null){
                 PartsCost = Double.parseDouble(rs.getString(1));
-               // System.out.println(PartsCost);
+                }
             }
         } catch (SQLException e1) {
 
@@ -715,6 +723,8 @@ public class PayFXMLController implements Initializable {
         String SQL = "insert into payment(amount,received_date,payment_method,customer_id,repair_id)values(" + total + "," + "'" + df.format(todayDate) + "'" + "," + "'" + Method + "'" + "," + id + "," + RepID + ");";
         stmt.execute(SQL);
         SQL= "update repairJob set job_status="+"'closed'"+" where repair_id="+RepID+";";
+         stmt.execute(SQL);
+         SQL="update repairJob set closed_date='"+df.format(todayDate)+"' where repair_id="+RepID+";";
          stmt.execute(SQL);
         SQL = ("select k.problem,k.price\n"
                 + "from repairJob j ,repair_problems k\n"
@@ -794,7 +804,7 @@ public class PayFXMLController implements Initializable {
         }
                  SQL = "insert into receipt values("+"'"+df.format(todayDate)+"'"+","+paymentno+","+"'"+TotalInfo+"'"+");";
                  stmt.execute(SQL);
-                       
+                 
                
     
     }

@@ -68,9 +68,17 @@ public class FXMLDocumentController {
     @FXML
     private CategoryAxis xAxis;
     @FXML
+    private Label labelPendingRepairs;
+    @FXML
+    private Label labelClosedRepairs;
+    @FXML
+    private Label labelFninishedJobs;
+    
+    @FXML
     void initialize() {
         try{
-        setBarChart();
+            setBarChart();
+            setLabelQueries();
         }
         catch(Exception e){
             System.out.println("Was not able to generate barchart.");
@@ -88,6 +96,33 @@ public class FXMLDocumentController {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	labelDate.setText(formatter.format(date));
+    }
+    
+    private void setLabelQueries()throws Exception{
+        int countPending=getCount("not open");
+        labelPendingRepairs.setText(countPending+"\nPending Repairs");
+        int countClosed=getCount("closed");
+        labelClosedRepairs.setText(countClosed+"\nClosed Repairs");
+        int countFinished=getCount("finished");
+        labelFninishedJobs.setText(countFinished+"\nFinished Repairs");
+    }
+    private int getCount(String status) throws Exception{
+        MyConnection.connectDB();
+        int count=0;
+        String SQL = "SELECT COUNT(R.repair_id) FROM repairJob R WHERE R.job_status = '"+status+"';";
+        Statement stmt = MyConnection.con.createStatement();
+        ResultSet rs = stmt.executeQuery(SQL);
+        try {
+            while (rs.next()) {
+                count=Integer.parseInt(rs.getString(1));
+            }
+        } catch (Exception e) {
+            System.out.println("Error in reading data");
+        }
+        rs.close();
+        stmt.close();
+        MyConnection.con.close();
+        return count;
     }
     
     private void setBarChart()throws Exception{
@@ -165,7 +200,15 @@ public class FXMLDocumentController {
     }
 
     @FXML
-    private void btnRepairJobsArchiveClicked(ActionEvent event) {
+    private void btnRepairJobsArchiveClicked(ActionEvent event) throws Exception{
+        final Stage primaryStage2 = new Stage();
+        primaryStage2.initModality(Modality.APPLICATION_MODAL);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage2.initOwner(app_stage);
+        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("RepairJobsArchive.fxml"));
+        Scene scene11 = new Scene(nextSceneParent);
+        primaryStage2.setScene(scene11);
+        primaryStage2.show();        
     }
 
     @FXML
@@ -220,6 +263,7 @@ public class FXMLDocumentController {
     private void refrechClicked(ActionEvent event) {
         try{
         setBarChart();
+        setLabelQueries();
     }
         catch(Exception e){
             System.out.println("Could not load the Bar Chart");

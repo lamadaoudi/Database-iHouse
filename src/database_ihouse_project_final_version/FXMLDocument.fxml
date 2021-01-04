@@ -7,6 +7,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -26,7 +27,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font name="Bookman Old Style" size="31.0" />
+                  <Font name="Book Antiqua" size="30.0" />
                </font>
                <padding>
                   <Insets bottom="50.0" left="30.0" top="20.0" />
@@ -166,12 +167,12 @@
             </JFXButton>
          </children>
       </VBox>
-      <Label fx:id="labelGreeting" layoutX="623.0" layoutY="50.0" prefHeight="36.0" prefWidth="318.0" text="GOOD MORNING!" textAlignment="CENTER">
+      <Label fx:id="labelGreeting" alignment="TOP_CENTER" layoutX="607.0" layoutY="70.0" prefHeight="36.0" prefWidth="318.0" text="GOOD MORNING!" textAlignment="CENTER">
          <font>
-            <Font name="Century Schoolbook" size="28.0" />
+            <Font name="Book Antiqua" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="labelDate" layoutX="716.0" layoutY="112.0" prefHeight="23.0" prefWidth="97.0" text="12">
+      <Label fx:id="labelDate" alignment="TOP_CENTER" layoutX="718.0" layoutY="121.0" prefHeight="23.0" prefWidth="97.0" text="12">
          <font>
             <Font name="Calisto MT Italic" size="18.0" />
          </font>
@@ -187,21 +188,16 @@
             <Blend />
          </effect>
       </BarChart>
-      <Label layoutX="1018.0" layoutY="701.0" prefHeight="17.0" prefWidth="159.0" text="iHouse | All rights reserved" textFill="#110909">
-         <font>
-            <Font name="Book Antiqua" size="12.0" />
-         </font>
-      </Label>
       <Label layoutX="664.0" layoutY="398.0" text="Total Repair Jobs Recieved per Month">
          <font>
             <Font name="Book Antiqua" size="14.0" />
          </font>
       </Label>
-      <JFXButton layoutX="1056.0" layoutY="36.0" onAction="#refrechClicked" text="REFRESH">
+      <JFXButton layoutX="352.0" layoutY="118.0" onAction="#refrechClicked" text="REFRESH">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../pictures/refresh_80px.png" />
+                  <Image url="@../pictures/synchronize_64px.png" />
                </image>
             </ImageView>
          </graphic>
@@ -209,5 +205,41 @@
             <Font name="Book Antiqua" size="12.0" />
          </font>
       </JFXButton>
+      <Label fx:id="labelPendingRepairs" alignment="CENTER" layoutX="707.0" layoutY="210.0" prefHeight="71.0" prefWidth="159.0" style="-fx-background-color: #393e46;" text="Finished Jobs" textAlignment="CENTER" textFill="WHITE">
+         <effect>
+            <DropShadow />
+         </effect>
+         <font>
+            <Font name="Book Antiqua" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelClosedRepairs" alignment="CENTER" layoutX="919.0" layoutY="210.0" prefHeight="71.0" prefWidth="159.0" style="-fx-background-color: #393e46;" text="Finished Jobs" textAlignment="CENTER" textFill="WHITE">
+         <effect>
+            <DropShadow />
+         </effect>
+         <font>
+            <Font name="Book Antiqua" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelFninishedJobs" alignment="CENTER" layoutX="487.0" layoutY="210.0" prefHeight="71.0" prefWidth="159.0" style="-fx-background-color: #393e46;" text="Finished Jobs" textAlignment="CENTER" textFill="WHITE">
+         <effect>
+            <DropShadow />
+         </effect>
+         <font>
+            <Font name="Book Antiqua" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="980.0" layoutY="702.0" prefHeight="17.0" prefWidth="179.0" text="iHouse | All rights reserved">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="61.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/apple_logo_50px_black.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
    </children>
 </AnchorPane>

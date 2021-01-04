@@ -7,6 +7,7 @@ package database_ihouse_project_final_version;
 
 import Classes.AppleBranch;
 import Classes.RepairJob;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -52,6 +53,8 @@ public class ActiveRepairJobsController implements Initializable {
 
     private ArrayList<RepairJob> RepairJobList;
     private ObservableList<RepairJob> dataList;
+    @FXML
+    private JFXButton btnDelete;
 
     /**
      * Initializes the controller class.
@@ -194,7 +197,6 @@ public class ActiveRepairJobsController implements Initializable {
         }
 
     }
-
     @FXML
     private void editTechnician(TableColumn.CellEditEvent<RepairJob, String> t) {
         try {
@@ -268,5 +270,36 @@ public class ActiveRepairJobsController implements Initializable {
         }
         
     }
+
+
+    @FXML
+    private void btnDeleteClicked(ActionEvent event) {
+        tvActiveRepairJobs.setItems(dataList);
+        ObservableList<RepairJob> selectedRows = tvActiveRepairJobs.getSelectionModel().getSelectedItems();
+        ArrayList<RepairJob> rows = new ArrayList<>(selectedRows);
+        rows.forEach(row -> {
+            tvActiveRepairJobs.getItems().remove(row);
+            deleteRow(row);
+            tvActiveRepairJobs.refresh();
+        });
+        showDataJobs();
+    }
+    
+    private void deleteRow(RepairJob row) {
+        // TODO Auto-generated method stub
+        try {
+            System.out.println("delete from apple_branch where branch_no=" + row.getBranch_no() + ";");
+            MyConnection.connectDB();
+            MyConnection.ExecuteStatement("delete from repairJob where repair_id=" + row.getRepair_id()+ ";");
+            MyConnection.con.close();
+            System.out.println("Connection closed");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }    
+    
 
 }
