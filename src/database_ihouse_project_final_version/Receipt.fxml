@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="467.0" prefWidth="389.0" style="-fx-background-color: #393e46;" styleClass="..\..\CssFile.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="database_ihouse_project_final_version.ReceiptController">
+   <children>
+      <JFXButton fx:id="PrintButton" contentDisplay="RIGHT" layoutY="422.0" prefHeight="36.0" prefWidth="77.0" style="-fx-border-color: #fcf876; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="Print" textFill="#9a9a81">
+         <graphic>
+            <ImageView fitHeight="17.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/print_50px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="Exitbutton" layoutX="293.0" layoutY="422.0" onAction="#exitBtn" prefHeight="36.0" prefWidth="77.0" style="-fx-border-color: #fcf876; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="Exit" textFill="#9a9a81" />
+      <Label fx:id="RecLab" alignment="TOP_LEFT" layoutX="23.0" layoutY="70.0" prefHeight="213.0" prefWidth="327.0" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Pane layoutX="22.0" layoutY="284.0" prefHeight="1.0" prefWidth="327.0" style="-fx-background-color: #677381;" />
+      <Label fx:id="totalLab" layoutX="22.0" layoutY="286.0" prefHeight="36.0" prefWidth="228.0" textFill="WHITE" />
+      <Label fx:id="Top" layoutX="103.0" layoutY="14.0" prefHeight="36.0" prefWidth="196.0" text="iHouse| Receipt" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pictures/apple_logo_24px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <Label fx:id="thank" layoutX="95.0" layoutY="344.0" prefHeight="25.0" prefWidth="245.0" text="Thank You for Choosing iHouse" textFill="WHITE" />
+      <Label fx:id="DATE" layoutX="142.0" layoutY="41.0" prefHeight="28.0" prefWidth="151.0" textFill="WHITE" />
+      <Pane layoutX="24.0" layoutY="69.0" prefHeight="1.0" prefWidth="327.0" style="-fx-background-color: #677381;" />
+      <Label fx:id="payno" layoutX="20.0" layoutY="42.0" prefHeight="26.0" prefWidth="114.0" textFill="WHITE" />
+   </children>
+</AnchorPane>
