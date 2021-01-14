@@ -74,6 +74,7 @@ public class AddRepairCustomerController implements Initializable {
     private int countProblems = 0;
     private int currentRepairID;
     private int currentCustomerID;
+    private String currentAreaOfSpecialty;
     private boolean alreadyRegisteredCustomer = false;
     private boolean customerSuccess=false;
     private boolean problemSucess=false;
@@ -82,6 +83,7 @@ public class AddRepairCustomerController implements Initializable {
     private ToggleGroup toggle= new ToggleGroup();
     private ArrayList<AvailableTechnicians> dataTechnicians;
     private static ObservableList<AvailableTechnicians> dataList;
+
     
     @FXML
     private JFXTabPane tabPane;
@@ -373,6 +375,7 @@ public class AddRepairCustomerController implements Initializable {
         MyConnection.connectDB();
 
         try {
+            
             int customerID = Integer.parseInt(tfIDCustomer.getText());
             String CustomerPhone1 = tfPrimaryCustomerPhone.getText();
             if (CustomerPhone1.isEmpty()) {
@@ -431,6 +434,7 @@ public class AddRepairCustomerController implements Initializable {
     public void addCustReqRep() throws Exception{
         MyConnection.connectDB();
         try{
+            currentCustomerID=Integer.parseInt(tfIDCustomer.getText());
             int customerID = Integer.parseInt(tfIDCustomer.getText());
             String SQL2= "insert into CustReqRep (repair_id, id_num) values("+currentRepairID+","+customerID+");";
             MyConnection.ExecuteStatement(SQL2);
@@ -536,7 +540,8 @@ public class AddRepairCustomerController implements Initializable {
         try{
             if(tfSerialNumber.getText().isEmpty() || tfModelNumer.getText().isEmpty() || tfCondition.getText().isEmpty() || toggle.getSelectedToggle()==null || tfSpecifications.getText().isEmpty())
                 throw new NullPointerException();
-            String deviceType="";
+            String deviceType=""; //HERE IS THE AREA OF SPECIALTY
+           
             if(radioAppleWatch.isSelected())
                 deviceType="Apple Watch";
             else if(radioMacBook.isSelected())
@@ -545,9 +550,11 @@ public class AddRepairCustomerController implements Initializable {
                 deviceType="iPhone";
             else if(radioiPad.isSelected())
                 deviceType="iPad";
+            currentAreaOfSpecialty= String.valueOf(deviceType); 
             int warranty= toggleWarranty.isSelected()?1:0;
             System.out.println("Device Type:"+deviceType+" warranty: "+warranty);
             String SQL="insert into device (serial_no, device_type, model_no, warranty, specs, device_condition, repair_id, customer_id) values ('"+tfSerialNumber.getText()+"','"+deviceType+"','"+tfModelNumer.getText()+"',"+warranty+",'"+tfSpecifications.getText()+"','"+tfCondition.getText()+"',"+currentRepairID+","+currentCustomerID+");";
+            System.out.println(SQL);
             MyConnection.ExecuteStatement(SQL);
             deviceSucces=true;
         }
@@ -559,9 +566,12 @@ public class AddRepairCustomerController implements Initializable {
         }
         MyConnection.con.close();
         if (deviceSucces){
+                getDataTechnicians();
+                showTechnicians();
                 tabPane.getSelectionModel().selectNext();
                 tab4.setDisable(false);
                 tab3.setDisable(true);
+
         }
     }
 
@@ -613,16 +623,17 @@ public class AddRepairCustomerController implements Initializable {
         String SQL;
         MyConnection.connectDB();
         System.out.println("Connection \n\n\n");
-        SQL = "select T.id_num, T.eName, COUNT(R.repair_id)\n" +
-            "FROM Technician T, repairJob R\n" +
-            "WHERE T.id_num = R.technician_id\n" +
-            "AND R.job_status<>'closed' AND R.job_status<>'finished'\n" +
-            "GROUP BY R.technician_id\n" +
-            "UNION\n" +
-            "SELECT T.id_num, T.eName,  0 AS 'NUMBER_OF_ASSOCIATED JOBS'\n" +
-            "FROM Technician T\n" +
-            "WHERE T.id_num NOT IN\n" +
-            "( SELECT R.technician_id FROM repairJob R WHERE R.technician_id AND (R.job_status<>'closed' AND R.job_status<>'finished'));";
+        SQL = "select T.id_num, E.eName, COUNT(R.repair_id)\n" +
+        "FROM Technician T, repairJob R, Employee E\n" +
+        "WHERE T.id_num = E.id_num AND T.id_num = R.technician_id\n" +
+        "AND R.job_status<>'closed' AND R.job_status<>'finished' AND T.area_of_specialty='"+currentAreaOfSpecialty+"'\n" +
+        "GROUP BY R.technician_id\n" +
+        "UNION\n" +
+        "SELECT T.id_num, E.eName,  0 AS 'NUMBER_OF_ASSOCIATED JOBS'\n" +
+        "FROM Technician T, Employee E\n" +
+        "WHERE T.id_num = E.id_num AND T.area_of_specialty='"+currentAreaOfSpecialty+"' AND T.id_num NOT IN\n" +
+        "( SELECT R.technician_id FROM repairJob R WHERE R.technician_id AND (R.job_status<>'closed' AND R.job_status<>'finished'));";
+        System.out.println(SQL);
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {

@@ -8,6 +8,7 @@ package database_ihouse_project_final_version;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.sql.Statement;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -56,6 +57,9 @@ public class LoginFormController implements Initializable {
                 MyConnection.setDbUsername(tfUsername.getText().trim());
                 MyConnection.setDbPassword(pfPassword.getText().trim());
                 MyConnection.connectDB();
+                String SQL="use ihouse";
+                Statement stmt = MyConnection.con.createStatement();
+                stmt.execute(SQL);
                 MyConnection.con.close();
                 Stage stage = (Stage) btnLogin.getScene().getWindow();
                 stage.close();

@@ -232,11 +232,27 @@ public class FXMLDocumentController {
     }
 
     @FXML
-    private void btnMyEmployeesClicked(ActionEvent event) {
+    private void btnMyEmployeesClicked(ActionEvent event) throws Exception {
+        final Stage primaryStage2 = new Stage();
+        primaryStage2.initModality(Modality.APPLICATION_MODAL);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage2.initOwner(app_stage);
+        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("Employees.fxml"));
+        Scene scene11 = new Scene(nextSceneParent);
+        primaryStage2.setScene(scene11);
+        primaryStage2.show();
     }
 
     @FXML
-    private void btnMyCustomersClicked(ActionEvent event) {
+    private void btnMyCustomersClicked(ActionEvent event) throws Exception{
+        final Stage primaryStage2 = new Stage();
+        primaryStage2.initModality(Modality.APPLICATION_MODAL);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        primaryStage2.initOwner(app_stage);
+        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("Customers.fxml"));
+        Scene scene11 = new Scene(nextSceneParent);
+        primaryStage2.setScene(scene11);
+        primaryStage2.show();
     }
 
     @FXML

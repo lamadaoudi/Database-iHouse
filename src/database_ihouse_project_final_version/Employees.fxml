@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<JFXTabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="1268.0" style="-fx-background-color: #393e46;" stylesheets="@../StyleSheets/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="database_ihouse_project_final_version.EmployeeController">
+   <tabs>
+      <Tab fx:id="tab1" style="-fx-background-color: #393e46;" text="Employees">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #393e46;">
+               <children>
+                  <Label layoutX="23.0" layoutY="539.0" prefHeight="45.0" prefWidth="188.0" text="iHouse | All rights reserved" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="61.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <TableView fx:id="tv" layoutX="51.0" layoutY="81.0" prefHeight="435.0" prefWidth="1130.0" style="-fx-background-color: #393e46;" stylesheets="@../StyleSheets/TableViewStyle.css">
+                     <columns>
+                        <TableColumn fx:id="colID" prefWidth="136.0" text="ID" />
+                        <TableColumn fx:id="colName" minWidth="0.0" onEditCommit="#editName" prefWidth="177.99996948242188" text="Name" />
+                        <TableColumn fx:id="colDate" onEditStart="#editDOB" prefWidth="117.0" text="Date Of Birth" />
+                        <TableColumn fx:id="colDOE" onEditCommit="#editDOE" prefWidth="153.0" text="Degree of Education" />
+                        <TableColumn fx:id="colPosition" minWidth="0.0" onEditCommit="#editPosition" prefWidth="114.0" text="Position" />
+                        <TableColumn fx:id="colSalary" onEditCommit="#editSalary" prefWidth="103.0" text="Salary" />
+                        <TableColumn fx:id="colStartDate" minWidth="0.0" onEditStart="#editStartDate" prefWidth="117.0" text="Emp. Start Date" />
+                        <TableColumn fx:id="colEmail" minWidth="0.0" onEditCommit="#editEmail" prefWidth="211.0" text="E-mail" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="41.0" layoutY="19.0" prefHeight="42.0" prefWidth="315.0" text="iHouse | Employees" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="btnDelete" layoutX="536.0" layoutY="14.0" onAction="#btnDeleteClicked" prefHeight="52.0" prefWidth="228.0" style="-fx-font-size: 18; -fx-background-color: #393e46; -fx-font-family: system;" stylesheets="@click.css" text="  Delete Employee" textFill="#f2f2f2">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/delete_document_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXTextField fx:id="tfSearch" focusColor="#fcf876" layoutX="846.0" layoutY="14.0" prefHeight="42.0" prefWidth="335.0" promptText="Search Box" style="-fx-text-inner-color: #ffffff;" />
+                  <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="803.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/loupe.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab fx:id="tab22" style="-fx-background-color: #393e46;" text="Employees Contact Info">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1396.0" style="-fx-background-color: #393e46;">
+               <children>
+                  <Label layoutX="28.0" layoutY="523.0" prefHeight="45.0" prefWidth="188.0" text="iHouse | All rights reserved" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="61.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <TableView fx:id="tvPhone" layoutX="68.0" layoutY="80.0" prefHeight="445.0" prefWidth="751.0" style="-fx-background-color: #393e46;" stylesheets="@../StyleSheets/TableViewStyle.css">
+                     <columns>
+                        <TableColumn fx:id="colIDphone" prefWidth="154.0" text="ID" />
+                        <TableColumn fx:id="colNamephone" minWidth="0.0" onEditCommit="#editName" prefWidth="185.0" text="Name" />
+                        <TableColumn fx:id="colEmailphone" minWidth="0.0" onEditCommit="#editEmail" prefWidth="205.0" text="E-mail" />
+                        <TableColumn fx:id="colPhone" minWidth="0.0" onEditCommit="#editPhone" prefWidth="206.0" text="Phone Number" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="41.0" layoutY="19.0" prefHeight="42.0" prefWidth="315.0" text="iHouse | Employees | Contact Info" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="tfSearchPhone" focusColor="#fcf876" layoutX="846.0" layoutY="14.0" prefHeight="42.0" prefWidth="335.0" promptText="Search Box" style="-fx-text-inner-color: #ffffff;" />
+                  <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="803.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/loupe.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="btnDeletePhone" layoutX="864.0" layoutY="215.0" onAction="#btnDeletePhoneClicked" prefHeight="52.0" prefWidth="307.0" style="-fx-font-size: 18; -fx-background-color: #393e46; -fx-font-family: system;" stylesheets="@click.css" text="Delete Phone Number" textFill="#f2f2f2">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/delete_document_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab fx:id="tab2" style="-fx-background-color: #393e46;" text="Technicians">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1396.0" style="-fx-background-color: #393e46;">
+               <children>
+                  <Label layoutX="28.0" layoutY="523.0" prefHeight="45.0" prefWidth="188.0" text="iHouse | All rights reserved" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="61.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <TableView fx:id="tvTech" layoutX="10.0" layoutY="82.0" prefHeight="433.0" prefWidth="1249.0" style="-fx-background-color: #393e46;" stylesheets="@../StyleSheets/TableViewStyle.css">
+                     <columns>
+                        <TableColumn fx:id="colID1" prefWidth="136.0" text="ID" />
+                        <TableColumn fx:id="colName1" minWidth="0.0" onEditCommit="#editName" prefWidth="177.99996948242188" text="Name" />
+                        <TableColumn fx:id="colDate1" onEditStart="#editDOB" prefWidth="117.0" text="Date Of Birth" />
+                        <TableColumn fx:id="colDOE1" onEditCommit="#editDOE" prefWidth="153.0" text="Degree of Education" />
+                        <TableColumn fx:id="colSalary1" onEditCommit="#editSalary" prefWidth="103.0" text="Salary" />
+                        <TableColumn fx:id="colStartDate1" minWidth="0.0" onEditStart="#editStartDate" prefWidth="127.0" text="Emp. Start Date" />
+                        <TableColumn fx:id="colEmail1" minWidth="0.0" onEditCommit="#editEmail" prefWidth="161.0" text="E-mail" />
+                        <TableColumn fx:id="colAreaOf" minWidth="0.0" onEditCommit="#editAreaOf" prefWidth="134.0" text="Area Of Speacility" />
+                        <TableColumn fx:id="colCertif" onEditCommit="#editCertif" prefWidth="139.0" text="Certification" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="41.0" layoutY="19.0" prefHeight="42.0" prefWidth="315.0" text="iHouse | Employees | Technicians" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="tfSearchTech" focusColor="#fcf876" layoutX="846.0" layoutY="14.0" prefHeight="42.0" prefWidth="335.0" promptText="Search Box" />
+                  <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="803.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/loupe.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab fx:id="tab3" style="-fx-background-color: #393e46;" text="Insert New Employee">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #393e46;">
+               <children>
+                  <JFXButton fx:id="btnInsert" layoutX="1006.0" layoutY="522.0" onAction="#btnInsertClicked" prefHeight="47.0" prefWidth="222.0" style="-fx-border-color: #f9ff81; -fx-border-radius: 70%;" text="Insert Employee" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="20.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="44.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/add_administrator_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnAddPhoneNum" layoutX="657.0" layoutY="447.0" onAction="#btnAddPhoneClicked" text="Add Phone Number" textFill="#f8f8f8">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/add_phone_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Book Antiqua" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <Label layoutX="27.0" layoutY="537.0" prefHeight="17.0" prefWidth="179.0" text="iHouse | All rights reserved" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="61.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <VBox alignment="CENTER_LEFT" layoutX="221.0" layoutY="64.0" prefHeight="405.0" prefWidth="163.0" spacing="30.0">
+                     <children>
+                        <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="176.0" text="ID" textFill="#f8f8f8">
+                           <font>
+                              <Font name="Book Antiqua" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="10.0" text="Name" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="27.0" prefHeight="19.0" prefWidth="108.0" text="Date Of Birth" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="44.0" text="Degree of Education" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="61.0" text="Position" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="78.0" text="Salary" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="95.0" text="Emp. Start Date" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="112.0" text="E-mail" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Phone Number(s)" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <VBox layoutX="384.0" layoutY="50.0" prefHeight="528.0" prefWidth="269.0" spacing="17.0">
+                     <children>
+                        <JFXTextField fx:id="tfID" focusColor="#fcf876" layoutX="10.0" layoutY="10.0" onKeyTyped="#tfIDClicked" prefHeight="38.0" prefWidth="213.0" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXTextField fx:id="tfName" focusColor="#fcf876" onKeyTyped="#tfNameClicked" prefHeight="38.0" prefWidth="213.0" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXDatePicker fx:id="datePickerDOB" defaultColor="#fcf876" onAction="#selectDOB" prefHeight="43.0" prefWidth="269.0" />
+                        <JFXComboBox fx:id="DOEcb" focusColor="#fcf876" onAction="#selectDOE" prefHeight="43.0" prefWidth="268.0" promptText="Choose Your Degree Of Education">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </JFXComboBox>
+                        <JFXComboBox fx:id="cbPosition" focusColor="#fcf876" onAction="#SelectPosition" prefHeight="43.0" prefWidth="269.0" promptText="Choose Your Position">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </JFXComboBox>
+                        <JFXTextField fx:id="tfSalary" focusColor="#fcf876" onKeyTyped="#SalarytfClicked" prefHeight="43.0" prefWidth="269.0" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXDatePicker fx:id="datePickerStartDate" defaultColor="#fcf876" onAction="#selectStartDate" prefHeight="45.0" prefWidth="269.0" />
+                        <JFXTextField fx:id="tfEmail" focusColor="#fcf876" onKeyTyped="#emailtfClicked" prefHeight="32.0" prefWidth="269.0" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXTextField fx:id="tfPrimaryEmployeePhone" focusColor="#fcf876" onKeyTyped="#PrimaryphoneNumClicked" prefHeight="29.0" prefWidth="213.0" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXTextField fx:id="tfSecondaryEmployeePhone" focusColor="#fcf876" prefHeight="38.0" prefWidth="210.0" style="-fx-text-inner-color: #ffffff;" visible="false" />
+                        <JFXTextField fx:id="tfSecondaryEmployeePhone2" focusColor="#fcf876" prefHeight="38.0" prefWidth="210.0" style="-fx-text-inner-color: #ffffff;" visible="false" />
+                     </children>
+                  </VBox>
+                  <Label layoutX="41.0" layoutY="8.0" prefHeight="42.0" prefWidth="410.0" text="iHouse | Employees | Insert New Employee" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="tfPosition" focusColor="#fcf876" layoutX="673.0" layoutY="239.0" onKeyTyped="#PositionClick" prefHeight="43.0" prefWidth="269.0" promptText="Enter Your Position" visible="false" />
+                  <Label fx:id="invalidID" layoutX="651.0" layoutY="36.0" prefHeight="57.0" prefWidth="192.0" text="ID is invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="invalidName" layoutX="651.0" layoutY="85.0" prefHeight="57.0" prefWidth="192.0" text="Name is Invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="invalidSalary" layoutX="651.0" layoutY="286.0" prefHeight="57.0" prefWidth="192.0" text="Salary is invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="idRequired" layoutX="651.0" layoutY="36.0" prefHeight="57.0" prefWidth="192.0" text="ID is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="NameRequired" layoutX="651.0" layoutY="85.0" prefHeight="57.0" prefWidth="192.0" text="Name is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="SalaryRequired" layoutX="651.0" layoutY="286.0" prefHeight="57.0" prefWidth="192.0" text="Salary is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="DOBrequired" layoutX="651.0" layoutY="136.0" prefHeight="57.0" prefWidth="253.0" text="Date Of Birth is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="DOErequired" layoutX="651.0" layoutY="183.0" prefHeight="57.0" prefWidth="315.0" text="Degree Of Education is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="positionrequired" layoutX="651.0" layoutY="230.0" prefHeight="57.0" prefWidth="227.0" text="Position is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="daterequired" layoutX="651.0" layoutY="333.0" prefHeight="57.0" prefWidth="253.0" text="Start Date is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="emailrequired" layoutX="651.0" layoutY="382.0" prefHeight="57.0" prefWidth="192.0" text="Email is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="phonenumrequired" layoutX="653.0" layoutY="438.0" prefHeight="57.0" prefWidth="259.0" text="Phone Number is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="invalidphonenum" layoutX="654.0" layoutY="438.0" prefHeight="57.0" prefWidth="248.0" text="Phone Number is Invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="takenID" layoutX="651.0" layoutY="36.0" prefHeight="57.0" prefWidth="209.0" text="ID is Already Taken!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="positionrequiredtf" layoutX="942.0" layoutY="230.0" prefHeight="57.0" prefWidth="227.0" text="Position is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="invalidposition" layoutX="942.0" layoutY="230.0" prefHeight="57.0" prefWidth="192.0" text="Position is Invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab fx:id="tab4" style="-fx-background-color: #393e46;" text="Insert New Technician">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #393e46;">
+               <children>
+                  <JFXButton fx:id="btnInsertTech" layoutX="580.0" layoutY="441.0" onAction="#btnInsertTech" prefHeight="47.0" prefWidth="222.0" style="-fx-border-color: #f9ff81; -fx-border-radius: 70%;" text="Insert Technician" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="20.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/worker_80px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <Label layoutX="27.0" layoutY="537.0" prefHeight="17.0" prefWidth="179.0" text="iHouse | All rights reserved" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="61.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <VBox layoutX="369.0" layoutY="160.0" prefHeight="116.0" prefWidth="213.0" spacing="17.0">
+                     <children>
+                        <JFXTextField fx:id="certificationtf" focusColor="#fcf876" layoutX="10.0" layoutY="10.0" onKeyTyped="#certiftfClicked" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXTextField fx:id="areaOftf" focusColor="#fcf876" onKeyTyped="#areaoftfClicked" style="-fx-text-inner-color: #ffffff;" />
+                     </children>
+                  </VBox>
+                  <Label layoutX="47.0" layoutY="14.0" prefHeight="42.0" prefWidth="522.0" text="iHouse | Employees | Technicians | Insert New Technician" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="CENTER_LEFT" layoutX="227.0" layoutY="130.0" prefHeight="135.0" prefWidth="184.0" spacing="12.0">
+                     <children>
+                        <Label prefHeight="36.0" prefWidth="137.0" text="certification" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="38.0" prefWidth="192.0" text="area of specialty" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <Label fx:id="invalidareaOf" layoutX="580.0" layoutY="190.0" prefHeight="57.0" prefWidth="260.0" text="Area Of Speciality is Invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="areaofRequired" layoutX="580.0" layoutY="190.0" prefHeight="57.0" prefWidth="292.0" text="Area Of Speciality is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="certifrequired" layoutX="580.0" layoutY="141.0" prefHeight="57.0" prefWidth="292.0" text="Certification is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="invalidcertif" layoutX="580.0" layoutY="141.0" prefHeight="57.0" prefWidth="292.0" text="Certification is Invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <JFXButton fx:id="btnInsertTech1" layoutX="580.0" layoutY="441.0" onAction="#btnUpdateToTech" prefHeight="49.0" prefWidth="231.0" style="-fx-border-color: #f9ff81; -fx-border-radius: 70%;" text="Update Employee" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="20.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/worker_80px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+   </tabs>
+</JFXTabPane>

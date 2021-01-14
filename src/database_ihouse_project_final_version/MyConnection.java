@@ -15,8 +15,8 @@ package database_ihouse_project_final_version;
  * and open the template in the editor.
  */
 
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -66,21 +66,23 @@ public class MyConnection {
         con = DriverManager.getConnection (dbURL, p);
         System.out.println("Connection Succesful");
 }
-    
-        public static void ExecuteStatement(String SQL) throws SQLException {
+    public static void ExecuteStatement(String SQL) throws SQLException {
 
         try {
             Statement stmt = con.createStatement();
             stmt.executeUpdate(SQL);
             stmt.close();
 
-        }
-        catch (SQLException s) {
+        }  catch (MySQLIntegrityConstraintViolationException ignored){
+            System.out.println("Duplicated key!\n\n\n\n");
+            CustomerController.duplicatedID=1;
+            EmployeeController.duplicatedID=1;
+            ignored.printStackTrace();
+        } catch (SQLException s) {
             s.printStackTrace();
             System.out.println("SQL statement is not executed!");
-            
-        }
 
+        }
 
     }
            
