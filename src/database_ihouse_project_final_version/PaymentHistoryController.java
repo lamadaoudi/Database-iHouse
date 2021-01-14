@@ -170,9 +170,7 @@ public class PaymentHistoryController implements Initializable {
 
             Parent root;
             try {
-                //System.out.println("database_ihouse_project_final_version.FXMLDocumentController.btnPayClicked()");
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Receipt.fxml"));
-
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));

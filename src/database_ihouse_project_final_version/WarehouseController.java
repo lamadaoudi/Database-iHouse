@@ -212,7 +212,7 @@ public class WarehouseController implements Initializable {
     private void updatePartType(String serialNo, String partType) {
         try {
             MyConnection.connectDB();
-            MyConnection.ExecuteStatement("update replacement_parts set part_type= '" + partType + "' where serial_no = " + serialNo + ";");
+            MyConnection.ExecuteStatement("update replacement_parts set part_type= '" + partType + "' where serial_no = '" + serialNo + "';");
             MyConnection.con.close();
             System.out.println("Connection closed");
         } catch (SQLException e) {

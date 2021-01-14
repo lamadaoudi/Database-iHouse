@@ -1,7 +1,7 @@
 package database_ihouse_project_final_version;
 
-import Classes.Customer_Phone;
 import Classes.Customer;
+import Classes.Customer_Phone;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTabPane;
@@ -43,6 +43,13 @@ public class CustomerController implements Initializable {
 
     public TableColumn colPhone;
     public JFXTextField tfSearchPhone;
+    public Label NotFoundID;
+    public JFXTextField IDphonetf;
+    public JFXTextField insertphonetf;
+    public Label phonenuminvalid;
+    public Label requiredphonenum;
+    public Label idphonerequired;
+    public Label invalidIDphone;
     @FXML
     private JFXComboBox<String> combo;
     @FXML
@@ -83,7 +90,7 @@ public class CustomerController implements Initializable {
     private ArrayList<Customer_Phone> dataInfo;
     private int countPhones = 0;
     static int InsertedSuccessfully = 0;
-
+    private int Phone_inserted=0;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -109,21 +116,17 @@ public class CustomerController implements Initializable {
         dataInfo = new ArrayList<>();
         String SQL;
         MyConnection.connectDB();
-        SQL = "select * from customer_phone order by customer_id";
+        SQL = "select cp.customer_id , c.customer_name, cp.phone_num from customer_phone cp, customer c\n" +
+                " where cp.customer_id = c.customer_id ;";
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {
-            Customer_Phone cust = null;
+            Customer_Phone cust;
             while (rs.next()) {
                 cust = new Customer_Phone(Integer.parseInt(rs.getString(1)),
-                        "",
-                        Integer.parseInt(rs.getString(2)));
+                        rs.getString(2),
+                        Integer.parseInt(rs.getString(3)));
 
-                for (int i = 0; i < data.size(); i++) {
-                    if (Integer.parseInt(rs.getString(1)) == data.get(i).getCustomer_id()) {
-                        cust.setCustomer_name(data.get(i).getCustomer_name());
-                    }
-                }
                 dataInfo.add(cust);
             }
         } catch (Exception e) {
@@ -161,19 +164,19 @@ public class CustomerController implements Initializable {
 
         tfSearchPhone.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(info -> {
-                        // If filter text is empty, display all persons.
+                // If filter text is empty, display all persons.
 
-                        if (newValue == null || newValue.isEmpty()) {
-                            return true;
-                        }
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
 
                 // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
-                if (info.getCustomer_name().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                if (info.getCustomer_name()!=null && info.getCustomer_name().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true; // Filter matches first name.
                 } else // Does not match.
 
-                    if(String.valueOf(info.getCustomer_id()).indexOf(lowerCaseFilter) != -1)
+                    if (String.valueOf(info.getCustomer_id()).indexOf(lowerCaseFilter) != -1)
                         return true;
                     else
                         return String.valueOf(info.getPhone_num()).indexOf(lowerCaseFilter) != -1;
@@ -232,7 +235,6 @@ public class CustomerController implements Initializable {
         colID.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customer_id"));
         colName.setCellValueFactory(new PropertyValueFactory<Customer, String>("customer_name"));
         colAdd.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));
-        //  colPhone.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("phone_num"));
         search();
     }
 
@@ -286,21 +288,7 @@ public class CustomerController implements Initializable {
         }
     }
 
-    /*
-        @FXML
-        void btnDeleteClicked(ActionEvent event) {
-            tv.setItems(dataList);
-            ObservableList<Employee> selectedRows = tv.getSelectionModel().getSelectedItems();
-            ArrayList<Employee> rows = new ArrayList<>(selectedRows);
-            rows.forEach(row -> {
-                tv.getItems().remove(row);
-                deleteRow(row);
-                tv.refresh();
-            });
-            showEmployees();
-        }
-     */
-     @FXML
+    @FXML
     void btnInsertClicked(ActionEvent event) throws Exception {
 
         boolean nonEmptyEntries = !tfName.getText().isEmpty() &&
@@ -325,12 +313,6 @@ public class CustomerController implements Initializable {
                 tabPane.getSelectionModel().selectFirst();
             }
         } else {
-          /*  Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("An Input Field is Empty");
-            alert.setContentText("Please fill up all Input Fields");
-            alert.showAndWait();
-
-           */
             if (tfID.getText().isEmpty())
                 emptyalert1.setVisible(true);
             if (tfName.getText().isEmpty())
@@ -364,19 +346,6 @@ public class CustomerController implements Initializable {
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        } else {
-         /*   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("This is a Custom Confirmation Dialog");
-            alert.setContentText("We override the style classes of the dialog");
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(
-                    getClass().getResource("myDialog.css").toExternalForm());
-            dialogPane.getStyleClass().add("myDialog");
-            alert.showAndWait();
-
-
-          */
         }
 
     }
@@ -399,7 +368,7 @@ public class CustomerController implements Initializable {
                 if (customer.getCustomer_name() != null && customer.getCustomer_name().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true; // Filter matches first name.
                 } else // Does not match.
-                    if (customer.getAddress()!= null && customer.getAddress().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    if (customer.getAddress() != null && customer.getAddress().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                         return true; // Filter matches last name.
                     } else return String.valueOf(customer.getCustomer_id()).indexOf(lowerCaseFilter) != -1;
             });
@@ -491,15 +460,18 @@ public class CustomerController implements Initializable {
                 System.out.println("\"insert into customer_phone (emp_id, phone_num) values ");
                 String SQL = "insert into customer_phone (customer_id, phone_num) values (" + customerID + "," + Integer.parseInt(CustomerPhone1) + ");";
                 MyConnection.ExecuteStatement(SQL);
+                Phone_inserted=1;
             } else if (!CustomerPhone1.isEmpty() && !CustomerPhone2.isEmpty() && CustomerPhone3.isEmpty()) {
                 System.out.println("\"insert into customer_phone (emp_id, phone_num) values ");
                 String SQL1 = "insert into customer_phone (customer_id, phone_num) values (" + customerID + "," + Integer.parseInt(CustomerPhone1) + ");";
                 String SQL2 = "insert into customer_phone (customer_id, phone_num) values (" + customerID + "," + Integer.parseInt(CustomerPhone2) + ");";
                 if (Integer.parseInt(CustomerPhone1) == Integer.parseInt(CustomerPhone2)) {
                     showAlertViolation();
+
                 } else {
                     MyConnection.ExecuteStatement(SQL1);
                     MyConnection.ExecuteStatement(SQL2);
+                    Phone_inserted=1;
                 }
             } else if (!CustomerPhone1.isEmpty() && !CustomerPhone2.isEmpty() && !CustomerPhone3.isEmpty()) {
                 System.out.println("\"insert into customer_phone (emp_id, phone_num) values ");
@@ -513,6 +485,7 @@ public class CustomerController implements Initializable {
                     MyConnection.ExecuteStatement(SQL1);
                     MyConnection.ExecuteStatement(SQL2);
                     MyConnection.ExecuteStatement(SQL3);
+                    Phone_inserted=1;
                 }
             }
         } catch (NullPointerException e) {
@@ -598,7 +571,6 @@ public class CustomerController implements Initializable {
                 Integer.parseInt(tfPrimaryCustomerPhone.getText());
                 alert4.setVisible(false);
             } catch (NumberFormatException e) {
-                //e.printStackTrace();
                 btnAddPhoneNum.setVisible(false);
                 alert4.setVisible(true);
             }
@@ -607,4 +579,135 @@ public class CustomerController implements Initializable {
             emptyalert4.setVisible(true);
         }
     }
+
+    public void btnInsertPhoneClicked(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        boolean nonEmptyEntries = !IDphonetf.getText().isEmpty() &&
+                !insertphonetf.getText().isEmpty();
+        if (nonEmptyEntries) {
+            /** Make Sure The Entered ID Is Already Exists In Customer Info **/
+            String SQL,SQL2;
+            MyConnection.connectDB();
+            try {
+                SQL = "SELECT EXISTS(SELECT * from customer WHERE customer.customer_id =" + Integer.parseInt(IDphonetf.getText()) + ");";
+                Statement stmt1 = MyConnection.con.createStatement();
+                ResultSet rs1 = stmt1.executeQuery(SQL);
+                int test = 0;
+                try {
+                    while (rs1.next()) {
+                        test = Integer.parseInt(rs1.getString(1));
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error in loop");
+                    System.exit(1);
+                }
+                    NotFoundID.setVisible(false);
+                    if(test == 1) {
+                        insertNewPhone(Integer.parseInt(IDphonetf.getText()), Integer.parseInt(insertphonetf.getText()));
+                        getContactInfo();
+                        showCustomerContactInfo();
+                        IDphonetf.clear();
+                        insertphonetf.clear();
+                        tabPane.getSelectionModel().selectPrevious();
+                        rs1.close();
+                        stmt1.close();
+                    }
+                    else
+                        NotFoundID.setVisible(true);
+            } catch (SQLException e) {
+                NotFoundID.setVisible(true);
+                e.printStackTrace();
+            }
+
+        } else {
+            if (IDphonetf.getText().isEmpty())
+                idphonerequired.setVisible(true);
+            if (insertphonetf.getText().isEmpty())
+                requiredphonenum.setVisible(true);
+
+        }
+
+    }
+
+    private void insertNewPhone(int id, int phone_num) {
+        if (!invalidIDphone.isVisible() && !phonenuminvalid.isVisible()) {
+            try {
+                MyConnection.connectDB();
+                MyConnection.ExecuteStatement("insert into customer_phone (customer_id, phone_num) values (" + id + "," + phone_num + ");");
+                MyConnection.con.close();
+                System.out.println("Connection closed");
+            } catch (SQLException | ClassNotFoundException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ERROR in Adding Phone Number");
+                alert.setContentText("An Error Occurred While Adding The Specified Phone Number!");
+                alert.showAndWait();
+            }
+        }
+
+    }
+
+    public void IDphoneclicked(KeyEvent keyEvent) {
+        idphonerequired.setVisible(false);
+        invalidIDphone.setVisible(false);
+        //  takenID.setVisible(false);
+        if (!IDphonetf.getText().isEmpty()) {
+            try {
+                idphonerequired.setVisible(false);
+                Integer.parseInt(IDphonetf.getText());
+                invalidIDphone.setVisible(false);
+            } catch (NumberFormatException e) {
+                invalidIDphone.setVisible(true);
+            }
+        } else
+            idphonerequired.setVisible(true);
+    }
+
+    public void phoneclicked(KeyEvent keyEvent) {
+        requiredphonenum.setVisible(false);
+        phonenuminvalid.setVisible(false);
+        if (!insertphonetf.getText().isEmpty()) {
+            try {
+                requiredphonenum.setVisible(false);
+                Integer.parseInt(insertphonetf.getText());
+                phonenuminvalid.setVisible(false);
+            } catch (NumberFormatException e) {
+                phonenuminvalid.setVisible(true);
+            }
+        } else {
+            requiredphonenum.setVisible(true);
+        }
+
+    }
+
+
+    public void btnDeletePhoneClicked(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        tvPhone.setItems(dataListInfo);
+        ObservableList<Customer_Phone> selectedRows = tvPhone.getSelectionModel().getSelectedItems();
+        ArrayList<Customer_Phone> rows = new ArrayList<>(selectedRows);
+        rows.forEach(row -> {
+            tvPhone.getItems().remove(row);
+            deleteRowPhone(row);
+            tvPhone.refresh();
+
+        });
+        getData();
+        showCustomers();
+        getContactInfo();
+        showCustomerContactInfo();
+        searchContactInfo();
+    }
+
+    private void deleteRowPhone(Customer_Phone row) {
+        // TODO Auto-generated method stub
+
+        try {
+            MyConnection.connectDB();
+            MyConnection.ExecuteStatement("delete from  customer_phone where customer_id=" + row.getCustomer_id() + " AND phone_num=" + row.getPhone_num() + ";");
+            MyConnection.con.close();
+            System.out.println("Connection closed");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

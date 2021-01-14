@@ -14,8 +14,6 @@ package database_ihouse_project_final_version;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,7 +23,6 @@ import java.util.Properties;
 import javafx.scene.control.Alert;
 
 public class MyConnection {
-        
             private static String dbURL;
             private static String dbUsername;
             private static String dbPassword;

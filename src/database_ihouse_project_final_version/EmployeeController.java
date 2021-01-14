@@ -5,6 +5,7 @@
  */
 package database_ihouse_project_final_version;
 
+import Classes.Customer;
 import Classes.Employee_Phone;
 import Classes.Technician;
 import Classes.Employee;
@@ -79,6 +80,16 @@ public class EmployeeController implements Initializable {
     public Label invalidcertif;
     public JFXButton btnInsertTech1;
     public JFXButton btnInsertTech;
+    public JFXButton btnInsertPhone;
+    public JFXButton btnInsertPhoneClicked;
+    public Tab tab5;
+    public JFXTextField IDphonetf;
+    public JFXTextField insertphonetf;
+    public Label idphonerequired;
+    public Label requiredphonenum;
+    public Label invalidIDphone;
+    public Label phonenuminvalid;
+    public Label NotFoundID;
     private ArrayList<Employee> data;
     private ArrayList<Employee_Phone> dataInfo;
     private ArrayList<Technician> dataTech;
@@ -291,21 +302,17 @@ public class EmployeeController implements Initializable {
         dataInfo = new ArrayList<>();
         String SQL;
         MyConnection.connectDB();
-        SQL = "select * from employee_phone  order by emp_id";
+        SQL = "select ep.phone_num,ep.emp_id , e.ename,e.e_mail from employee_phone ep, employee e where ep.emp_id = e.id_num;";
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {
             Employee_Phone emp = null;
             while (rs.next()) {
-                emp = new Employee_Phone(Integer.parseInt(rs.getString(1)),
-                        Integer.parseInt(rs.getString(2)), "", "");
 
-                for (int i = 0; i < data.size(); i++) {
-                    if (Integer.parseInt(rs.getString(2)) == data.get(i).getId_num()) {
-                        emp.setEName(data.get(i).getName());
-                        emp.setE_mail(data.get(i).getE_mail());
-                    }
-                }
+                emp = new Employee_Phone(Integer.parseInt(rs.getString(1)),
+                        Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
+
+
                 dataInfo.add(emp);
 
             }
@@ -740,7 +747,6 @@ public class EmployeeController implements Initializable {
         if (nonEmptyEntries) {
             if (!cbPosition.getSelectionModel().getSelectedItem().equalsIgnoreCase("Technician") && tfPosition != null) {
                 position = tfPosition.getText();
-                //      System.err.println(" here ? " + position);
             } else position = "Technician";
             // position = cbPosition.getSelectionModel().getSelectedItem().toString();
             LocalDate localDate = datePickerDOB.getValue();
@@ -839,8 +845,6 @@ public class EmployeeController implements Initializable {
             }
         }
     }
-
-
     private void insertTech(Technician Tech) {
         InsertedSuccessfully = 0;
         duplicatedID = 0;
@@ -860,7 +864,6 @@ public class EmployeeController implements Initializable {
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            // System.out.println("Sorry");
         }
     }
 
@@ -868,7 +871,6 @@ public class EmployeeController implements Initializable {
         MyConnection.connectDB();
         try {
             int employeeID = Integer.parseInt(tfID.getText());
-            System.out.println("Employeeee" + employeeID);
             String EmployeePhone1 = tfPrimaryEmployeePhone.getText();
             String EmployeePhone2 = tfSecondaryEmployeePhone.getText();
             String EmployeePhone3 = tfSecondaryEmployeePhone2.getText();
@@ -956,11 +958,74 @@ public class EmployeeController implements Initializable {
         showTechnicians();
         getData();
         showEmployees();
-        //search();
-        //searchContactInfo();
-        //searchTech();
+        searchContactInfo();
         
     }
+    public void btnInsertPhoneClicked(ActionEvent actionEvent)throws Exception {
+        boolean nonEmptyEntries = !IDphonetf.getText().isEmpty() && !insertphonetf.getText().isEmpty();
+        if (nonEmptyEntries) {
+            /** Make Sure The Entered ID Is Already Exists In Customer Info **/
+            String SQL,SQL2;
+            MyConnection.connectDB();
+            try {
+                SQL = "SELECT EXISTS(SELECT * from employee WHERE employee.id_num =" + Integer.parseInt(IDphonetf.getText()) + ");";
+                Statement stmt1 = MyConnection.con.createStatement();
+                ResultSet rs1 = stmt1.executeQuery(SQL);
+                int test = 0;
+                try {
+                    while (rs1.next()) {
+                        test = Integer.parseInt(rs1.getString(1));
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error in loop");
+                    System.exit(1);
+                }
+                    NotFoundID.setVisible(false);
+                    if(test == 1) {
+                        insertNewPhone(Integer.parseInt(IDphonetf.getText()), Integer.parseInt(insertphonetf.getText()));
+                        getContactInfo();
+                        showEmployeesContactInfo();
+                        IDphonetf.clear();
+                        insertphonetf.clear();
+                        tabPane.getSelectionModel().selectPrevious();
+                        rs1.close();
+                        stmt1.close();
+                    }
+                    else
+                        NotFoundID.setVisible(true);
+            } catch (SQLException e) {
+                NotFoundID.setVisible(true);
+                e.printStackTrace();
+            }
+
+        } else {
+            if (IDphonetf.getText().isEmpty())
+                idphonerequired.setVisible(true);
+            if (insertphonetf.getText().isEmpty())
+                requiredphonenum.setVisible(true);
+
+        }
+
+
+    }
+
+    private void insertNewPhone(int id, int phone_num) {
+        if (!invalidIDphone.isVisible() && !phonenuminvalid.isVisible()) {
+            try {
+                MyConnection.connectDB();
+                MyConnection.ExecuteStatement("insert into employee_phone (emp_id, phone_num) values (" + id + "," + phone_num + ");");
+                MyConnection.con.close();
+                System.out.println("Connection closed");
+            } catch (SQLException | ClassNotFoundException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ERROR in Adding Phone Number");
+                alert.setContentText("An Error Occured While Adding The Specified Phone Number!");
+                alert.showAndWait();
+            }
+        }
+
+    }
+
     private void deleteRowPhone(Employee_Phone row) {
         // TODO Auto-generated method stub
 
@@ -1064,10 +1129,10 @@ public class EmployeeController implements Initializable {
 
                 // Compare first name and last name of every person with filter text.
                  String lowerCaseFilter = newValue.toLowerCase();
-                if (info.getEName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                if (info.getEName()!= null && info.getEName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true; // Filter matches first name.
                 } else // Does not match.
-                    if (info.getE_mail().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    if (info.getE_mail()!=null && info.getE_mail().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                         return true; // Filter matches last name.
                     } else
                         if(String.valueOf(info.getEmp_id()).indexOf(lowerCaseFilter) != -1)
@@ -1410,6 +1475,39 @@ public class EmployeeController implements Initializable {
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public void IDphoneclicked(KeyEvent keyEvent) {
+        idphonerequired.setVisible(false);
+        invalidIDphone.setVisible(false);
+      //  takenID.setVisible(false);
+        if (!IDphonetf.getText().isEmpty()) {
+            try {
+                idphonerequired.setVisible(false);
+                Integer.parseInt(IDphonetf.getText());
+                invalidIDphone.setVisible(false);
+            } catch (NumberFormatException e) {
+                invalidIDphone.setVisible(true);
+            }
+        } else
+            idphonerequired.setVisible(true);
+    }
+
+    public void phoneclicked(KeyEvent keyEvent) {
+        requiredphonenum.setVisible(false);
+        phonenuminvalid.setVisible(false);
+        if (!insertphonetf.getText().isEmpty()) {
+            try {
+                requiredphonenum.setVisible(false);
+                Integer.parseInt(insertphonetf.getText());
+                phonenuminvalid.setVisible(false);
+            } catch (NumberFormatException e) {
+                phonenuminvalid.setVisible(true);
+            }
+        } else {
+            requiredphonenum.setVisible(true);
         }
     }
 }

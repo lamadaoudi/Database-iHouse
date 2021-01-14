@@ -32,7 +32,6 @@ import javafx.stage.Stage;
  *
  * @author Main
  */
-
 public class FXMLDocumentController {
 
     @FXML
@@ -56,8 +55,6 @@ public class FXMLDocumentController {
     @FXML
     private JFXButton btnMyCustomers;
     @FXML
-    private JFXButton btnSettings;
-    @FXML
     private JFXButton btnSendToAppleBranch;
     @FXML
     private JFXButton btnWarehouse;
@@ -73,48 +70,48 @@ public class FXMLDocumentController {
     private Label labelClosedRepairs;
     @FXML
     private Label labelFninishedJobs;
-    
+
     @FXML
     void initialize() {
-        try{
+        try {
             setBarChart();
             setLabelQueries();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Was not able to generate barchart.");
         }
         Calendar c = Calendar.getInstance();
         System.out.println(c);
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-        if(timeOfDay >= 0 && timeOfDay < 12)
+        if (timeOfDay >= 0 && timeOfDay < 12) {
             labelGreeting.setText("GOOD MORNING");
-                      
-        else if(timeOfDay >= 12 && timeOfDay < 16)
+        } else if (timeOfDay >= 12 && timeOfDay < 16) {
             labelGreeting.setText("GOOD AFTERNOON");
-        else
+        } else {
             labelGreeting.setText("GOOD EVENING");
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-	Date date = new Date();
-	labelDate.setText(formatter.format(date));
+        Date date = new Date();
+        labelDate.setText(formatter.format(date));
     }
-    
-    private void setLabelQueries()throws Exception{
-        int countPending=getCount("not open");
-        labelPendingRepairs.setText(countPending+"\nPending Repairs");
-        int countClosed=getCount("closed");
-        labelClosedRepairs.setText(countClosed+"\nClosed Repairs");
-        int countFinished=getCount("finished");
-        labelFninishedJobs.setText(countFinished+"\nFinished Repairs");
+
+    private void setLabelQueries() throws Exception {
+        int countPending = getCount("not open");
+        labelPendingRepairs.setText(countPending + "\nPending Repairs");
+        int countClosed = getCount("closed");
+        labelClosedRepairs.setText(countClosed + "\nClosed Repairs");
+        int countFinished = getCount("finished");
+        labelFninishedJobs.setText(countFinished + "\nFinished Repairs");
     }
-    private int getCount(String status) throws Exception{
+
+    private int getCount(String status) throws Exception {
         MyConnection.connectDB();
-        int count=0;
-        String SQL = "SELECT COUNT(R.repair_id) FROM repairJob R WHERE R.job_status = '"+status+"';";
+        int count = 0;
+        String SQL = "SELECT COUNT(R.repair_id) FROM repairJob R WHERE R.job_status = '" + status + "';";
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {
             while (rs.next()) {
-                count=Integer.parseInt(rs.getString(1));
+                count = Integer.parseInt(rs.getString(1));
             }
         } catch (Exception e) {
             System.out.println("Error in reading data");
@@ -124,175 +121,112 @@ public class FXMLDocumentController {
         MyConnection.con.close();
         return count;
     }
-    
-    private void setBarChart()throws Exception{
+
+    private void setBarChart() throws Exception {
         RepairJobsChart.getData().clear();
         XYChart.Series set1 = new XYChart.Series<>();
         MyConnection.connectDB();
-        ArrayList<Integer> countList=new ArrayList<>();
-        for ( int i= 1 ; i<=12 ; i++){
-            String monthString = new DateFormatSymbols().getMonths()[i-1];
-            int countJobs=0;
+        ArrayList<Integer> countList = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            String monthString = new DateFormatSymbols().getMonths()[i - 1];
+            int countJobs = 0;
             int year = Calendar.getInstance().get(Calendar.YEAR);
-            String SQL = "SELECT COUNT(R.repair_id) FROM repairJob R WHERE month(R.recieved_date)="+i+" AND year(R.recieved_date)="+year+";";
+            String SQL = "SELECT COUNT(R.repair_id) FROM repairJob R WHERE month(R.recieved_date)=" + i + " AND year(R.recieved_date)=" + year + ";";
             Statement stmt = MyConnection.con.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
             try {
                 while (rs.next()) {
-                    countJobs=Integer.parseInt(rs.getString(1));
+                    countJobs = Integer.parseInt(rs.getString(1));
                 }
             } catch (Exception e) {
                 System.out.println("Error in reading data");
             }
             rs.close();
             stmt.close();
-            set1.getData().add(new XYChart.Data(monthString, countJobs));            
+            set1.getData().add(new XYChart.Data(monthString, countJobs));
         }
         MyConnection.con.close();
         RepairJobsChart.getData().addAll(set1);
-        
+
     }
 
     @FXML
-    private void btnAddNewCaseClicked(ActionEvent event) throws Exception{
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("AddRepairCustomer.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
+    private void btnAddNewCaseClicked(ActionEvent event) throws Exception {
+        changeScene("AddRepairCustomer.fxml", event);
+
     }
 
     @FXML
-    private void btnPayClicked(ActionEvent event) {
-             Parent root;
-            try{ 
-             //System.out.println("database_ihouse_project_final_version.FXMLDocumentController.btnPayClicked()");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PayFXML.fxml"));
+    private void btnPayClicked(ActionEvent event) throws Exception {
+        changeScene("PayFXML.fxml", event);
 
-            Parent root1 = (Parent) fxmlLoader.load();
-              Stage stage = new Stage();
-              stage.setScene(new Scene(root1));  
-              stage.show();
-            }
-          catch(Exception e) {
-              e.printStackTrace();
-          }
-
-          }
-
-    @FXML
-    private void btnPaymentHistoryClicked(ActionEvent event) throws Exception{
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("PaymentHistory.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
     }
 
     @FXML
-    private void btnActiveRepairJobsClicked(ActionEvent event) throws Exception{
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("ActiveRepairJobs.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
+    private void btnPaymentHistoryClicked(ActionEvent event) throws Exception {
+        changeScene("PaymentHistory.fxml", event);
     }
 
     @FXML
-    private void btnRepairJobsArchiveClicked(ActionEvent event) throws Exception{
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("RepairJobsArchive.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();        
+    private void btnActiveRepairJobsClicked(ActionEvent event) throws Exception {
+        changeScene("ActiveRepairJobs.fxml", event);
+
+    }
+
+    @FXML
+    private void btnRepairJobsArchiveClicked(ActionEvent event) throws Exception {
+        changeScene("RepairJobsArchive.fxml", event);
     }
 
     @FXML
     private void btnRequestReplacementPartClicked(ActionEvent event) throws Exception {
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("RequestReplacementPart.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
+        changeScene("RequestReplacementPart.fxml", event);
     }
 
     @FXML
     private void btnMyEmployeesClicked(ActionEvent event) throws Exception {
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("Employees.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
+        changeScene("Employees.fxml", event);
+
     }
 
     @FXML
-    private void btnMyCustomersClicked(ActionEvent event) throws Exception{
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("Customers.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
+    private void btnMyCustomersClicked(ActionEvent event) throws Exception {
+        changeScene("Customers.fxml", event);
     }
 
     @FXML
-    private void btnSettingsClicked(ActionEvent event) {
+    private void btnSendToAppleBranchClicked(ActionEvent event) throws Exception {
+        changeScene("SendToAppleBranch.fxml", event);
     }
 
     @FXML
-    private void btnSendToAppleBranchClicked(ActionEvent event) throws Exception{
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("SendToAppleBranch.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
-    }
-
-    @FXML
-    private void btnWarehouseClicked(ActionEvent event) throws Exception{
-        final Stage primaryStage2 = new Stage();
-        primaryStage2.initModality(Modality.APPLICATION_MODAL);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage2.initOwner(app_stage);
-        Parent nextSceneParent = FXMLLoader.load(getClass().getResource("Warehouse.fxml"));
-        Scene scene11 = new Scene(nextSceneParent);
-        primaryStage2.setScene(scene11);
-        primaryStage2.show();
+    private void btnWarehouseClicked(ActionEvent event) throws Exception {
+        changeScene("Warehouse.fxml", event);
     }
 
     @FXML
     private void refrechClicked(ActionEvent event) {
-        try{
-        setBarChart();
-        setLabelQueries();
-    }
-        catch(Exception e){
+        try {
+            setBarChart();
+            setLabelQueries();
+        } catch (Exception e) {
             System.out.println("Could not load the Bar Chart");
         }
     }
-    
-    
+
+    private void changeScene(String sceneName, ActionEvent event) throws Exception {
+        try {
+            final Stage primaryStage2 = new Stage();
+            primaryStage2.initModality(Modality.APPLICATION_MODAL);
+            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage2.initOwner(app_stage);
+            Parent nextSceneParent = FXMLLoader.load(getClass().getResource(sceneName));
+            Scene scene11 = new Scene(nextSceneParent);
+            primaryStage2.setScene(scene11);
+            primaryStage2.show();
+        } catch (Exception e) {
+            System.out.println("Could not load scene");
+        }
+    }
+
 }

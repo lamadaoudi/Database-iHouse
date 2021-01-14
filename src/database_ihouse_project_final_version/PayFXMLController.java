@@ -108,6 +108,8 @@ public class PayFXMLController implements Initializable {
     private Label thank;
     @FXML
     private Label DATE;
+    @FXML
+    private RadioButton WarrantyTog1;
 
     /**
      * Initializes the controller class.
@@ -214,7 +216,7 @@ public class PayFXMLController implements Initializable {
     private FadeTransition fadeIn8 = new FadeTransition(
             Duration.millis(1000)
     );
-    private FadeTransition fadeIn9= new FadeTransition(
+    private FadeTransition fadeIn9 = new FadeTransition(
             Duration.millis(3000)
     );
     private FadeTransition fadeIn10 = new FadeTransition(
@@ -224,7 +226,8 @@ public class PayFXMLController implements Initializable {
     private int id;
     private double total = 0;
     private int RepID = 0;
-    private double tax=0;
+    private double tax = 0;
+
     @FXML
     private void OkbtnClick(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
 
@@ -246,7 +249,7 @@ public class PayFXMLController implements Initializable {
             try {
                 while (rs1.next()) {
                     test = Integer.parseInt(rs1.getString(1));
-                   // System.out.println(test);
+                    // System.out.println(test);
                     //System.out.println("YES");
                 }
 
@@ -286,7 +289,7 @@ public class PayFXMLController implements Initializable {
                 try {
                     while (rs2.next()) {
                         test2 = Integer.parseInt(rs2.getString(1));
-                       
+
                     }
 
                 } catch (SQLException e) {
@@ -321,7 +324,7 @@ public class PayFXMLController implements Initializable {
                                     Integer.parseInt(rs.getString(1)),
                                     rs.getString(2),
                                     rs.getString(3)));
-                           // System.out.println(data.get(0).toString());
+                            // System.out.println(data.get(0).toString());
                         }
                     } catch (SQLException e1) {
                         System.out.println("Error in loop");
@@ -406,288 +409,99 @@ public class PayFXMLController implements Initializable {
     }
     public double ProblemsCost = 0;
 
-    @FXML
-    private void button1clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-
+    private void calculatePayment(int index) throws IOException, SQLException, ClassNotFoundException {
         MyConnection.connectDB();
-        RepID = data.get(0).getRepID();
+        RepID = data.get(index).getRepID();
         String SQL;
-        
-        SQL = "select sum((RP.price*RN.amount))\n"
-                + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
-                + "where j.repair_id=RN.repair_id\n"
-                + "and RN.serial_no=Rp.serial_no\n"
-                + "and j.repair_id=" + data.get(0).getRepID() + ";";
-        Statement stmt1 = MyConnection.con.createStatement();
-        ResultSet rs = stmt1.executeQuery(SQL);
-        try {
-            while (rs.next()) {
-               if(rs.getString(1)!=null){
-                PartsCost = Double.parseDouble(rs.getString(1));
-                }
-            }
-        } catch (SQLException e1) {
-
-            System.exit(1);
-        }
-        SQL = "select sum(k.price)\n"
-                + "from repairJob j ,repair_problems k\n"
-                + "where k.repair_id=j.repair_id\n"
-                + "and j.repair_id=" + data.get(0).getRepID() + ";";
+        SQL = "select D.warranty from device D, RepairJob R\n"
+                + "WHERE R.repair_id = D.repair_id AND\n"
+                + "R.repair_id=" + data.get(index).getRepID() + ";";
+        int warranty = 0;
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs1 = stmt.executeQuery(SQL);
         try {
             while (rs1.next()) {
-                ProblemsCost = Double.parseDouble(rs1.getString(1));
-
+                if (rs1.getString(1) != null) {
+                    warranty = Integer.parseInt(rs1.getString(1));
+                }
             }
-        } catch (SQLException e) {
-            System.out.println("Error in loop");
-            System.exit(1);
+        } catch (SQLException e1) {
+            System.out.println("Could not fetch warranty");
         }
-        tax=0.16*(ProblemsCost + PartsCost);
-        total = ProblemsCost + PartsCost + (0.16 * (ProblemsCost + PartsCost));
+        if (warranty == 0) {
+            SQL = "select sum((RP.price*RN.amount))\n"
+                    + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
+                    + "where j.repair_id=RN.repair_id\n"
+                    + "and RN.serial_no=Rp.serial_no\n"
+                    + "and j.repair_id=" + data.get(index).getRepID() + ";";
+            Statement stmt1 = MyConnection.con.createStatement();
+            ResultSet rs = stmt1.executeQuery(SQL);
+            try {
+                while (rs.next()) {
+                    if (rs.getString(1) != null) {
+                        PartsCost = Double.parseDouble(rs.getString(1));
+                    }
+                }
+            } catch (SQLException e1) {
+
+                System.exit(1);
+            }
+            SQL = "select sum(k.price)\n"
+                    + "from repairJob j ,repair_problems k\n"
+                    + "where k.repair_id=j.repair_id\n"
+                    + "and j.repair_id=" + data.get(index).getRepID() + ";";
+            Statement stmt2 = MyConnection.con.createStatement();
+            ResultSet rs2 = stmt2.executeQuery(SQL);
+            try {
+                while (rs2.next()) {
+                    ProblemsCost = Double.parseDouble(rs2.getString(1));
+                }
+            } catch (SQLException e) {
+                System.out.println("Error in loop");
+                System.exit(1);
+            }
+            tax = 0.16 * (ProblemsCost + PartsCost);
+            total = ProblemsCost + PartsCost + (0.16 * (ProblemsCost + PartsCost));
+        } else {
+            total = 0;
+
+        }
         String s = String.valueOf(total);
         label2.setText("Amount to Pay: " + s);
         label2.setVisible(true);
         fadeIn5.playFromStart();
+        MyConnection.con.close();
 
+    }
+
+    @FXML
+    private void button1clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
+        calculatePayment(0);
     }
 
     @FXML
     private void button2clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-        RepID = data.get(1).getRepID();
-        MyConnection.connectDB();
-
-        String SQL;
-        SQL = "select sum((RP.price*RN.amount))\n"
-                + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
-                + "where j.repair_id=RN.repair_id\n"
-                + "and RN.serial_no=Rp.serial_no\n"
-                + "and j.repair_id=" + data.get(1).getRepID() + ";";
-        Statement stmt1 = MyConnection.con.createStatement();
-        ResultSet rs = stmt1.executeQuery(SQL);
-    
-        try {
-            while (rs.next()) {
-                if(rs.getString(1)!=null){
-                PartsCost = Double.parseDouble(rs.getString(1));
-                }
-            }
-        } catch (SQLException e1) {
-
-            System.exit(1);
-        }
-        SQL = "select sum(k.price)\n"
-                + "from repairJob j ,repair_problems k\n"
-                + "where k.repair_id=j.repair_id\n"
-                + "and j.repair_id=" + data.get(1).getRepID() + ";";
-        Statement stmt = MyConnection.con.createStatement();
-        ResultSet rs1 = stmt.executeQuery(SQL);
-        try {
-            while (rs1.next()) {
-                ProblemsCost = Double.parseDouble(rs1.getString(1));
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in loop");
-            System.exit(1);
-        }
-        tax=0.16*(ProblemsCost + PartsCost);
-        total = ProblemsCost + PartsCost + (0.16 * (ProblemsCost + PartsCost));
-        String s = String.valueOf(total);
-        label2.setText("Amount to Pay: " + s);
-        label2.setVisible(true);
-        fadeIn5.playFromStart();
-
+        calculatePayment(1);
     }
 
     @FXML
     private void button3clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-        RepID = data.get(2).getRepID();
-        MyConnection.connectDB();
-
-        String SQL;
-        SQL = "select sum((RP.price*RN.amount))\n"
-                + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
-                + "where j.repair_id=RN.repair_id\n"
-                + "and RN.serial_no=Rp.serial_no\n"
-                + "and j.repair_id=" + data.get(2).getRepID() + ";";
-        Statement stmt1 = MyConnection.con.createStatement();
-        ResultSet rs = stmt1.executeQuery(SQL);
-        try {
-            while (rs.next()) {
-                if(rs.getString(1)!=null){
-                PartsCost = Double.parseDouble(rs.getString(1));
-                }
-            }
-        } catch (SQLException e1) {
-
-            System.exit(1);
-        }
-        SQL = "select sum(k.price)\n"
-                + "from repairJob j ,repair_problems k\n"
-                + "where k.repair_id=j.repair_id\n"
-                + "and j.repair_id=" + data.get(2).getRepID() + ";";
-        Statement stmt = MyConnection.con.createStatement();
-        ResultSet rs1 = stmt.executeQuery(SQL);
-        try {
-            while (rs1.next()) {
-                ProblemsCost = Double.parseDouble(rs1.getString(1));
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in loop");
-            System.exit(1);
-        }
-        tax=0.16*(ProblemsCost + PartsCost);
-        total = ProblemsCost + PartsCost + (0.16 * (ProblemsCost + PartsCost));
-        String s = String.valueOf(total);
-        label2.setText("Amount to Pay: " + s);
-        label2.setVisible(true);
-        fadeIn5.playFromStart();
-
+        calculatePayment(2);
     }
 
     @FXML
     private void button4clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-        RepID = data.get(3).getRepID();
-        MyConnection.connectDB();
-
-        String SQL;
-        SQL = "select sum((RP.price*RN.amount))\n"
-                + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
-                + "where j.repair_id=RN.repair_id\n"
-                + "and RN.serial_no=Rp.serial_no\n"
-                + "and j.repair_id=" + data.get(3).getRepID() + ";";
-        Statement stmt1 = MyConnection.con.createStatement();
-        ResultSet rs = stmt1.executeQuery(SQL);
-        try {
-            while (rs.next()) {
-                if(rs.getString(1)!=null){
-                PartsCost = Double.parseDouble(rs.getString(1));
-                }
-            }
-        } catch (SQLException e1) {
-
-            System.exit(1);
-        }
-        SQL = "select sum(k.price)\n"
-                + "from repairJob j ,repair_problems k\n"
-                + "where k.repair_id=j.repair_id\n"
-                + "and j.repair_id=" + data.get(3).getRepID() + ";";
-        Statement stmt = MyConnection.con.createStatement();
-        ResultSet rs1 = stmt.executeQuery(SQL);
-        try {
-            while (rs1.next()) {
-                ProblemsCost = Double.parseDouble(rs1.getString(1));
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in loop");
-            System.exit(1);
-        }
-        tax=0.16*(ProblemsCost + PartsCost);
-        total = ProblemsCost + PartsCost + (0.16 * (ProblemsCost + PartsCost));
-        String s = String.valueOf(total);
-        label2.setText("Amount to Pay: " + s);
-        label2.setVisible(true);
-        fadeIn5.playFromStart();
-
+        calculatePayment(3);
     }
 
     @FXML
     private void button5clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-        RepID = data.get(4).getRepID();
-        MyConnection.connectDB();
-
-        String SQL;
-        SQL = "select sum((RP.price*RN.amount))\n"
-                + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
-                + "where j.repair_id=RN.repair_id\n"
-                + "and RN.serial_no=Rp.serial_no\n"
-                + "and j.repair_id=" + data.get(4).getRepID() + ";";
-        Statement stmt1 = MyConnection.con.createStatement();
-        ResultSet rs = stmt1.executeQuery(SQL);
-        try {
-            while (rs.next()) {
-                if(rs.getString(1)!=null){
-                PartsCost = Double.parseDouble(rs.getString(1));
-                }
-            }
-        } catch (SQLException e1) {
-
-            System.exit(1);
-        }
-        SQL = "select sum(k.price)\n"
-                + "from repairJob j ,repair_problems k\n"
-                + "where k.repair_id=j.repair_id\n"
-                + "and j.repair_id=" + data.get(4).getRepID() + ";";
-        Statement stmt = MyConnection.con.createStatement();
-        ResultSet rs1 = stmt.executeQuery(SQL);
-        try {
-            while (rs1.next()) {
-                ProblemsCost = Double.parseDouble(rs1.getString(1));
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in loop");
-            System.exit(1);
-        }
-        tax=0.16*(ProblemsCost + PartsCost);
-        total = ProblemsCost + PartsCost + (0.16 * (ProblemsCost + PartsCost));
-        String s = String.valueOf(total);
-        label2.setText("Amount to Pay: " + s);
-        label2.setVisible(true);
-        fadeIn5.playFromStart();
-
+        calculatePayment(4);
     }
 
     @FXML
     private void button6clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-        RepID = data.get(5).getRepID();
-        MyConnection.connectDB();
-
-        String SQL;
-        SQL = "select sum((RP.price*RN.amount))\n"
-                + "from RepNeedsRep RN,replacement_parts RP,repairJob j\n"
-                + "where j.repair_id=RN.repair_id\n"
-                + "and RN.serial_no=Rp.serial_no\n"
-                + "and j.repair_id=" + data.get(5).getRepID() + ";";
-        Statement stmt1 = MyConnection.con.createStatement();
-        ResultSet rs = stmt1.executeQuery(SQL);
-        try {
-            while (rs.next()) {
-                if(rs.getString(1)!=null){
-                PartsCost = Double.parseDouble(rs.getString(1));
-                }
-            }
-        } catch (SQLException e1) {
-
-            System.exit(1);
-        }
-        SQL = "select sum(k.price)\n"
-                + "from repairJob j ,repair_problems k\n"
-                + "where k.repair_id=j.repair_id\n"
-                + "and j.repair_id=" + data.get(5).getRepID() + ";";
-        Statement stmt = MyConnection.con.createStatement();
-        ResultSet rs1 = stmt.executeQuery(SQL);
-        try {
-            while (rs1.next()) {
-                ProblemsCost = Double.parseDouble(rs1.getString(1));
-
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in loop");
-            System.exit(1);
-        }
-        tax=0.16*(ProblemsCost + PartsCost);
-        total = ProblemsCost + PartsCost + (0.16 * (ProblemsCost + PartsCost));
-        String s = String.valueOf(total);
-        label2.setText("Amount to Pay: " + s);
-        label2.setVisible(true);
-        fadeIn5.playFromStart();
-
+        calculatePayment(5);
     }
 
     @FXML
@@ -699,21 +513,48 @@ public class PayFXMLController implements Initializable {
 
     @FXML
     private void CheckBtnClick(ActionEvent event) throws ClassNotFoundException, SQLException {
+        int flagNotProper = 0;
         Checkouttab.setDisable(false);
-        tabPane.getSelectionModel().selectNext();
+        
         if (CardTog.isSelected()) {
             Method = CardTog.getText();
 
-        }
-       else if (CashTog.isSelected()) {
+        } else if (CashTog.isSelected()) {
             Method = CashTog.getText();
 
-        }
-       else if(CashTog.isSelected()!=true && CardTog.isSelected()!=true){
+        } else if (WarrantyTog1.isSelected()) {
+            MyConnection.connectDB();
+            String SQL;
+            SQL = "select D.warranty from device D, RepairJob R\n"
+                    + "WHERE R.repair_id = D.repair_id AND\n"
+                    + "R.repair_id=" + RepID + ";";
+            int warranty = 0;
+            Statement stmt = MyConnection.con.createStatement();
+            ResultSet rs1 = stmt.executeQuery(SQL);
+            try {
+                while (rs1.next()) {
+                    if (rs1.getString(1) != null) {
+                        warranty = Integer.parseInt(rs1.getString(1));
+                    }
+                }
+            } catch (SQLException e1) {
+                System.out.println("Could not fetch warranty");
+            }
+            if (warranty == 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Inconsistent Info");
+                alert.setContentText("This device has no warranty!");
+                alert.showAndWait();
+                flagNotProper=1;
+            } else {
+                Method = WarrantyTog1.getText();
+            }
+        } else if (CashTog.isSelected() != true && CardTog.isSelected() != true && WarrantyTog1.isSelected()!=true) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing Info");
             alert.setContentText("Please Select A Payment Mehtod");
             alert.showAndWait();
+            flagNotProper=1;
         }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date todayDate = new Date();
@@ -722,10 +563,10 @@ public class PayFXMLController implements Initializable {
         Statement stmt = MyConnection.con.createStatement();
         String SQL = "insert into payment(amount,received_date,payment_method,customer_id,repair_id)values(" + total + "," + "'" + df.format(todayDate) + "'" + "," + "'" + Method + "'" + "," + id + "," + RepID + ");";
         stmt.execute(SQL);
-        SQL= "update repairJob set job_status="+"'closed'"+" where repair_id="+RepID+";";
-         stmt.execute(SQL);
-         SQL="update repairJob set closed_date='"+df.format(todayDate)+"' where repair_id="+RepID+";";
-         stmt.execute(SQL);
+        SQL = "update repairJob set job_status=" + "'closed'" + " where repair_id=" + RepID + ";";
+        stmt.execute(SQL);
+        SQL = "update repairJob set closed_date='" + df.format(todayDate) + "' where repair_id=" + RepID + ";";
+        stmt.execute(SQL);
         SQL = ("select k.problem,k.price\n"
                 + "from repairJob j ,repair_problems k\n"
                 + "where k.repair_id=j.repair_id\n"
@@ -747,10 +588,10 @@ public class PayFXMLController implements Initializable {
         ArrayList RepPart = new ArrayList<RepPart>();
         SQL = "select R.part_type,RN.amount,R.price\n"
                 + "from RepNeedsRep RN,replacement_parts R\n"
-                + "where RN.repair_id="+RepID+"\n"
-                + "and R.serial_no=RN.serial_no;" ;
-                 rs=stmt.executeQuery(SQL);
-                 try {
+                + "where RN.repair_id=" + RepID + "\n"
+                + "and R.serial_no=RN.serial_no;";
+        rs = stmt.executeQuery(SQL);
+        try {
             while (rs.next()) {
                 RepPart.add(new RepPart(
                         rs.getString(1),
@@ -761,59 +602,58 @@ public class PayFXMLController implements Initializable {
         } catch (SQLException e1) {
             System.out.println("Error in loop");
             System.exit(1);
-        }  
-                 
-                 String TotalInfo="";
-                 for(int i=0;i<prob.size();i++){
-                     TotalInfo=(new StringBuilder().append(TotalInfo).append(prob.get(i).toString()).append("\n").toString());
-                    //System.out.println("hi");
-                 }
-                // System.out.println(TotalInfo);
-                 for(int i=0;i<RepPart.size();i++){
-                     TotalInfo=TotalInfo.concat(RepPart.get(i).toString());
-                    TotalInfo= TotalInfo.concat("\n");
-                 }
-                // System.out.println(tax);
-                 TotalInfo=TotalInfo.concat("Tax"+".........................."+String.valueOf(tax));
-                
-                 RecLab.setFont(new Font("Book Antiqua",14));
-                 RecLab.setText(TotalInfo);
-              RecLab.setVisible(true);
-                 fadeIn8.playFromStart();
-                 totalLab.setText("Total: "+total);
-                 totalLab.setFont(new Font("Book Antiqua",18));
-                 totalLab.setVisible(true);
-                 fadeIn9.playFromStart();
-                 thank.setFont(new Font("Book Antiqua",12));
-                 thank.setVisible(true);
-                 fadeIn10.playFromStart();
-                 Top.setFont(new Font("Book Antiqua",16));
-                 DATE.setText(df.format(todayDate).toString());
-                 DATE.setFont(new Font("Book Antiqua",14));
-                  SQL="select max(payment_no)\n" +
-                      "from payment;";
-                    rs = stmt.executeQuery(SQL);
-                    int paymentno=0;
-           try {
-               while (rs.next()) {
-                  paymentno = Integer.parseInt(rs.getString(1));
-                //  System.out.println(PartsCost);
+        }
+
+        String TotalInfo = "";
+        for (int i = 0; i < prob.size(); i++) {
+            TotalInfo = (new StringBuilder().append(TotalInfo).append(prob.get(i).toString()).append("\n").toString());
+            //System.out.println("hi");
+        }
+        // System.out.println(TotalInfo);
+        for (int i = 0; i < RepPart.size(); i++) {
+            TotalInfo = TotalInfo.concat(RepPart.get(i).toString());
+            TotalInfo = TotalInfo.concat("\n");
+        }
+        // System.out.println(tax);
+        TotalInfo = TotalInfo.concat("Tax" + ".........................." + String.valueOf(tax));
+        RecLab.setFont(new Font("Book Antiqua", 14));
+        RecLab.setText(TotalInfo);
+        RecLab.setVisible(true);
+        fadeIn8.playFromStart();
+        totalLab.setText("Total: " + total);
+        totalLab.setFont(new Font("Book Antiqua", 18));
+        totalLab.setVisible(true);
+        fadeIn9.playFromStart();
+        thank.setFont(new Font("Book Antiqua", 12));
+        thank.setVisible(true);
+        fadeIn10.playFromStart();
+        Top.setFont(new Font("Book Antiqua", 16));
+        DATE.setText(df.format(todayDate).toString());
+        DATE.setFont(new Font("Book Antiqua", 14));
+        SQL = "select max(payment_no)\n"
+                + "from payment;";
+        rs = stmt.executeQuery(SQL);
+        int paymentno = 0;
+        try {
+            while (rs.next()) {
+                paymentno = Integer.parseInt(rs.getString(1));
             }
         } catch (SQLException e1) {
             System.exit(1);
         }
-                 SQL = "insert into receipt values("+"'"+df.format(todayDate)+"'"+","+paymentno+","+"'"+TotalInfo+"'"+");";
-                 stmt.execute(SQL);
-                 
-               
-    
+        SQL = "insert into receipt values(" + "'" + df.format(todayDate) + "'" + "," + paymentno + "," + "'" + TotalInfo + "'" + ");";
+        stmt.execute(SQL);
+        if (flagNotProper != 1){
+            tabPane.getSelectionModel().selectNext();
+        }
     }
+
     @FXML
-    private void exitBtn(ActionEvent event){
+    private void exitBtn(ActionEvent event
+    ) {
         Stage stage = (Stage) Exitbutton.getScene().getWindow();
-    // do what you have to do
-    stage.close();
+        // do what you have to do
+        stage.close();
     }
-    
 
 }

@@ -174,7 +174,7 @@ public class RepairJobsArchiveController implements Initializable {
         ArrayList<RepairJob> rows = new ArrayList<>(selectedRows);
         rows.forEach(row -> {
             try{
-            showDetails(row);
+                showDetails(row);
             }
             catch (Exception e){
                 System.out.println("Could not load details");
@@ -190,13 +190,14 @@ public class RepairJobsArchiveController implements Initializable {
         String technician_num="";
         String technician_name="";
         MyConnection.connectDB();
-        String SQL = "select R.repair_id, C.customer_name, D.serial_no, D.device_type, T.id_num, T.eName\n" +
-                    "FROM RepairJob R, Device D, Technician T, Customer C, custreqrep Q\n" +
+        String SQL = "select R.repair_id, C.customer_name, D.serial_no, D.device_type, T.id_num, E.eName\n" +
+                    "FROM RepairJob R, Device D, Technician T, Customer C, custreqrep Q, Employee E\n" +
                     "WHERE R.repair_id=D.repair_id AND\n" +
                     "	  R.technician_id = T.id_num AND\n" +
+                    "      E.id_num = T.id_num AND\n" +
                     "      Q.repair_id = R.repair_id AND\n" +
                     "      Q.id_num = C.customer_id AND\n" +
-                    "      R.repair_id="+row.getRepair_id()+";";
+                    "      R.repair_id="+ row.getRepair_id()+";";
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<JFXTabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="1268.0" style="-fx-background-color: #393e46;" stylesheets="@../StyleSheets/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="database_ihouse_project_final_version.EmployeeController">
+<JFXTabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="1268.0" style="-fx-background-color: #393e46;" stylesheets="@../StyleSheets/styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="database_ihouse_project_final_version.EmployeeController">
    <tabs>
       <Tab fx:id="tab1" style="-fx-background-color: #393e46;" text="Employees">
          <content>
@@ -124,7 +124,7 @@
                         <Image url="@../pictures/loupe.png" />
                      </image>
                   </ImageView>
-                  <JFXButton fx:id="btnDeletePhone" layoutX="864.0" layoutY="215.0" onAction="#btnDeletePhoneClicked" prefHeight="52.0" prefWidth="307.0" style="-fx-font-size: 18; -fx-background-color: #393e46; -fx-font-family: system;" stylesheets="@click.css" text="Delete Phone Number" textFill="#f2f2f2">
+                  <JFXButton fx:id="btnDeletePhone" layoutX="864.0" layoutY="209.0" onAction="#btnDeletePhoneClicked" prefHeight="62.0" prefWidth="307.0" style="-fx-font-size: 18; -fx-background-color: #393e46; -fx-font-family: system;" stylesheets="@click.css" text="Delete Phone Number" textFill="#f2f2f2">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -136,6 +136,145 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab fx:id="tab5" style="-fx-background-color: #393e46;" text="Insert New Phone">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #393e46;">
+               <children>
+                  <JFXButton fx:id="btnInsertPhoneClicked" layoutX="580.0" layoutY="441.0" onAction="#btnInsertPhoneClicked" prefHeight="49.0" prefWidth="269.0" style="-fx-border-color: #f9ff81; -fx-border-radius: 70%;" text="Insert Phone Number" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="20.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/add_phone_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <Label layoutX="27.0" layoutY="537.0" prefHeight="17.0" prefWidth="179.0" text="iHouse | All rights reserved" textFill="WHITE">
+                     <font>
+                        <Font name="Book Antiqua" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="61.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_24px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <VBox layoutX="369.0" layoutY="160.0" prefHeight="116.0" prefWidth="213.0" spacing="17.0">
+                     <children>
+                        <JFXTextField fx:id="IDphonetf" focusColor="#fcf876" layoutX="10.0" layoutY="10.0" onKeyTyped="#IDphoneclicked" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXTextField fx:id="insertphonetf" focusColor="#fcf876" onKeyTyped="#phoneclicked" style="-fx-text-inner-color: #ffffff;" />
+                     </children>
+                  </VBox>
+                  <Label layoutX="47.0" layoutY="14.0" prefHeight="42.0" prefWidth="578.0" text="iHouse | Employees | Employees Contact Info| Insert New Phone" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/apple_logo_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="CENTER_LEFT" layoutX="227.0" layoutY="130.0" prefHeight="135.0" prefWidth="144.0" spacing="12.0">
+                     <children>
+                        <Label prefHeight="36.0" prefWidth="137.0" text="ID" textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="38.0" prefWidth="192.0" text="Phone Number " textFill="WHITE">
+                           <font>
+                              <Font name="Georgia" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <Label fx:id="phonenuminvalid" layoutX="580.0" layoutY="190.0" prefHeight="57.0" prefWidth="260.0" text="Phone Number is Invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="requiredphonenum" layoutX="580.0" layoutY="190.0" prefHeight="57.0" prefWidth="292.0" text="Phone Number is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="idphonerequired" layoutX="580.0" layoutY="141.0" prefHeight="57.0" prefWidth="292.0" text="ID is Required!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="invalidIDphone" layoutX="580.0" layoutY="141.0" prefHeight="57.0" prefWidth="292.0" text="ID is Invalid!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <JFXButton fx:id="btnInsertTech11" layoutX="580.0" layoutY="441.0" onAction="#btnUpdateToTech" prefHeight="49.0" prefWidth="231.0" style="-fx-border-color: #f9ff81; -fx-border-radius: 70%;" text="Update Employee" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="20.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/worker_80px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <Label fx:id="NotFoundID" layoutX="580.0" layoutY="141.0" prefHeight="57.0" prefWidth="292.0" text="ID is Not Exist!" textFill="#d32121" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="83.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/brake_warning_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
                </children>
             </AnchorPane>
          </content>
@@ -287,8 +426,8 @@
                      <children>
                         <JFXTextField fx:id="tfID" focusColor="#fcf876" layoutX="10.0" layoutY="10.0" onKeyTyped="#tfIDClicked" prefHeight="38.0" prefWidth="213.0" style="-fx-text-inner-color: #ffffff;" />
                         <JFXTextField fx:id="tfName" focusColor="#fcf876" onKeyTyped="#tfNameClicked" prefHeight="38.0" prefWidth="213.0" style="-fx-text-inner-color: #ffffff;" />
-                        <JFXDatePicker fx:id="datePickerDOB" defaultColor="#fcf876" onAction="#selectDOB" prefHeight="43.0" prefWidth="269.0" />
-                        <JFXComboBox fx:id="DOEcb" focusColor="#fcf876" onAction="#selectDOE" prefHeight="43.0" prefWidth="268.0" promptText="Choose Your Degree Of Education">
+                        <JFXDatePicker fx:id="datePickerDOB" defaultColor="#fcf876" onAction="#selectDOB" prefHeight="43.0" prefWidth="269.0" style="-fx-text-inner-color: #ffffff;" />
+                        <JFXComboBox fx:id="DOEcb" focusColor="#fcf876" onAction="#selectDOE" prefHeight="43.0" prefWidth="268.0" promptText="Choose Your Degree Of Education" style="-fx-text-inner-color: #ffffff;">
                            <contextMenu>
                               <ContextMenu>
                                  <items>
@@ -297,7 +436,7 @@
                               </ContextMenu>
                            </contextMenu>
                         </JFXComboBox>
-                        <JFXComboBox fx:id="cbPosition" focusColor="#fcf876" onAction="#SelectPosition" prefHeight="43.0" prefWidth="269.0" promptText="Choose Your Position">
+                        <JFXComboBox fx:id="cbPosition" focusColor="#fcf876" onAction="#SelectPosition" prefHeight="43.0" prefWidth="269.0" promptText="Choose Your Position" style="-fx-text-inner-color: #ffffff;">
                            <contextMenu>
                               <ContextMenu>
                                  <items>
@@ -307,7 +446,7 @@
                            </contextMenu>
                         </JFXComboBox>
                         <JFXTextField fx:id="tfSalary" focusColor="#fcf876" onKeyTyped="#SalarytfClicked" prefHeight="43.0" prefWidth="269.0" style="-fx-text-inner-color: #ffffff;" />
-                        <JFXDatePicker fx:id="datePickerStartDate" defaultColor="#fcf876" onAction="#selectStartDate" prefHeight="45.0" prefWidth="269.0" />
+                        <JFXDatePicker fx:id="datePickerStartDate" defaultColor="#fcf876" onAction="#selectStartDate" prefHeight="45.0" prefWidth="269.0" style="-fx-text-inner-color: #ffffff;" />
                         <JFXTextField fx:id="tfEmail" focusColor="#fcf876" onKeyTyped="#emailtfClicked" prefHeight="32.0" prefWidth="269.0" style="-fx-text-inner-color: #ffffff;" />
                         <JFXTextField fx:id="tfPrimaryEmployeePhone" focusColor="#fcf876" onKeyTyped="#PrimaryphoneNumClicked" prefHeight="29.0" prefWidth="213.0" style="-fx-text-inner-color: #ffffff;" />
                         <JFXTextField fx:id="tfSecondaryEmployeePhone" focusColor="#fcf876" prefHeight="38.0" prefWidth="210.0" style="-fx-text-inner-color: #ffffff;" visible="false" />

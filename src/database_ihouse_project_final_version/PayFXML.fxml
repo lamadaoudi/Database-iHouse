@@ -133,7 +133,22 @@
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets></RadioButton>
-                        <JFXButton fx:id="CheckOut" layoutX="70.0" layoutY="183.0" onAction="#CheckBtnClick" prefHeight="45.0" prefWidth="214.0" style="-fx-border-color: #fcf876; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="CheckOut" textFill="#9a9a81" />
+                        <JFXButton fx:id="CheckOut" layoutX="73.0" layoutY="254.0" onAction="#CheckBtnClick" prefHeight="45.0" prefWidth="214.0" style="-fx-border-color: #fcf876; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="CheckOut" textFill="#9a9a81" />
+                        <RadioButton fx:id="WarrantyTog1" layoutX="113.0" layoutY="171.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" style="-fx-mark-color: #fcf876;" text="Warranty" textFill="WHITE" toggleGroup="$ToggGroup1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="21.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../pictures/guarantee_24px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </RadioButton>
                      </children></AnchorPane>
               </content>
             </Tab>
