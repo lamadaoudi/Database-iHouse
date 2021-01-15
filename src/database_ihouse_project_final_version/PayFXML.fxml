@@ -104,7 +104,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <RadioButton fx:id="CardTog" layoutX="113.0" layoutY="84.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="160.0" style="-fx-mark-color: #fcf876;" text="Credit Card" textFill="WHITE">
+                        <RadioButton fx:id="CardTog" layoutX="113.0" layoutY="84.0" mnemonicParsing="false" onAction="#cardClicked" prefHeight="20.0" prefWidth="160.0" style="-fx-mark-color: #fcf876;" text="Credit Card" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="ToggGroup1" />
                            </toggleGroup>
@@ -119,7 +119,7 @@
                               </ImageView>
                            </graphic>
                         </RadioButton>
-                        <RadioButton fx:id="CashTog" layoutX="113.0" layoutY="130.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" style="-fx-mark-color: #fcf876;" text="Cash" textFill="WHITE" toggleGroup="$ToggGroup1">
+                        <RadioButton fx:id="CashTog" layoutX="113.0" layoutY="130.0" mnemonicParsing="false" onAction="#cashClicked" prefHeight="26.0" prefWidth="147.0" style="-fx-mark-color: #fcf876;" text="Cash" textFill="WHITE" toggleGroup="$ToggGroup1">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -133,8 +133,8 @@
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets></RadioButton>
-                        <JFXButton fx:id="CheckOut" layoutX="73.0" layoutY="254.0" onAction="#CheckBtnClick" prefHeight="45.0" prefWidth="214.0" style="-fx-border-color: #fcf876; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="CheckOut" textFill="#9a9a81" />
-                        <RadioButton fx:id="WarrantyTog1" layoutX="113.0" layoutY="171.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" style="-fx-mark-color: #fcf876;" text="Warranty" textFill="WHITE" toggleGroup="$ToggGroup1">
+                        <JFXButton fx:id="CheckOut" layoutX="79.0" layoutY="293.0" onAction="#CheckBtnClick" prefHeight="45.0" prefWidth="214.0" style="-fx-border-color: #fcf876; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="CheckOut" textFill="#9a9a81" />
+                        <RadioButton fx:id="WarrantyTog1" layoutX="113.0" layoutY="171.0" mnemonicParsing="false" onAction="#warrantyClicked" prefHeight="26.0" prefWidth="147.0" style="-fx-mark-color: #fcf876;" text="Warranty" textFill="WHITE" toggleGroup="$ToggGroup1">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -149,6 +149,12 @@
                               <Insets />
                            </opaqueInsets>
                         </RadioButton>
+                        <JFXTextField fx:id="Discount" focusColor="#fcf876" layoutX="105.0" layoutY="234.0" prefHeight="24.0" prefWidth="175.0" promptText="Discount" style="-fx-text-inner-color: #ffffff; -fx-font-family: Book Antique;" unFocusColor="SILVER" />
+                        <ImageView fx:id="dismig" fitHeight="25.0" fitWidth="30.0" layoutX="71.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/discount_30px.png" />
+                           </image>
+                        </ImageView>
                      </children></AnchorPane>
               </content>
             </Tab>

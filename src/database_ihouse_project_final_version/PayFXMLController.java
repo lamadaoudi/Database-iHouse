@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -47,6 +48,8 @@ public class PayFXMLController implements Initializable {
     private AnchorPane container;
     @FXML
     private JFXButton Okbtn;
+    @FXML
+    private JFXTextField Discount;
     @FXML
     private JFXButton nextbtn1;
     @FXML
@@ -103,6 +106,8 @@ public class PayFXMLController implements Initializable {
     private RadioButton WarrantyTog1;
     @FXML
     private JFXButton payAnother;
+    @FXML
+    private ImageView dismig;
 
     /**
      * Initializes the controller class.
@@ -180,6 +185,18 @@ public class PayFXMLController implements Initializable {
         fadeIn10.setToValue(1.0);
         fadeIn10.setCycleCount(1);
         fadeIn10.setAutoReverse(false);
+        Discount.setVisible(false);
+        fadeIn11.setNode(Discount);
+        fadeIn11.setFromValue(0.0);
+        fadeIn11.setToValue(1.0);
+        fadeIn11.setCycleCount(1);
+        fadeIn11.setAutoReverse(false);
+        dismig.setVisible(false);
+        fadeIn12.setNode(dismig);
+        fadeIn12.setFromValue(0.0);
+        fadeIn12.setToValue(1.0);
+        fadeIn12.setCycleCount(1);
+        fadeIn12.setAutoReverse(false);
 
     }
     private FadeTransition fadeIn = new FadeTransition(
@@ -213,6 +230,12 @@ public class PayFXMLController implements Initializable {
             Duration.millis(3000)
     );
     private FadeTransition fadeIn10 = new FadeTransition(
+            Duration.millis(3500)
+    );
+    private FadeTransition fadeIn11 = new FadeTransition(
+            Duration.millis(3500)
+    );
+    private FadeTransition fadeIn12 = new FadeTransition(
             Duration.millis(3500)
     );
     private double PartsCost = 0;
@@ -541,6 +564,7 @@ public class PayFXMLController implements Initializable {
                 flagNotProper = 1;
             } else {
                 Method = WarrantyTog1.getText();
+
             }
         } else if (CashTog.isSelected() != true && CardTog.isSelected() != true && WarrantyTog1.isSelected() != true) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -548,6 +572,13 @@ public class PayFXMLController implements Initializable {
             alert.setContentText("Please Select A Payment Mehtod");
             alert.showAndWait();
             flagNotProper = 1;
+        }
+
+        int discount = 0;
+        if (Discount.getText().isEmpty() != true) {
+            discount = Integer.parseInt(Discount.getText());
+            total = total - discount;
+
         }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date todayDate = new Date();
@@ -609,6 +640,9 @@ public class PayFXMLController implements Initializable {
         }
         // System.out.println(tax);
         TotalInfo = TotalInfo.concat("Tax" + ".........................." + String.valueOf(tax));
+
+        TotalInfo = TotalInfo.concat("\nDiscounts" + ".........................." + String.valueOf(discount));
+
         RecLab.setFont(new Font("Book Antiqua", 14));
         RecLab.setText(TotalInfo);
         RecLab.setVisible(true);
@@ -659,6 +693,31 @@ public class PayFXMLController implements Initializable {
         Button5.setVisible(false);
         Button6.setVisible(false);
         OkbtnClick(new ActionEvent());
+    }
+
+    @FXML
+    void cardClicked(ActionEvent event) {
+        dismig.setVisible(true);
+        fadeIn12.playFromStart();
+        Discount.setVisible(true);
+        fadeIn11.playFromStart();;
+
+    }
+
+    @FXML
+    void cashClicked(ActionEvent event) {
+        dismig.setVisible(true);
+        fadeIn12.playFromStart();
+        Discount.setVisible(true);
+        fadeIn11.playFromStart();
+
+    }
+
+    @FXML
+    void warrantyClicked(ActionEvent event) {
+        dismig.setVisible(false);
+        Discount.setVisible(false);
+
     }
 
 }
