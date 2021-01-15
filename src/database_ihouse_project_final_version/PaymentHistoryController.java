@@ -6,13 +6,10 @@
 package database_ihouse_project_final_version;
 
 import Classes.Payment;
-import Classes.RepairJob;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

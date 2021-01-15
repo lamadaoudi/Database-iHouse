@@ -185,6 +185,7 @@
                         <Label fx:id="thank" layoutX="94.0" layoutY="333.0" prefHeight="25.0" prefWidth="245.0" text="Thank You for Choosing iHouse" textFill="WHITE" />
                         <Label fx:id="DATE" layoutX="142.0" layoutY="41.0" prefHeight="28.0" prefWidth="151.0" textFill="WHITE" />
                         <Pane layoutX="24.0" layoutY="69.0" prefHeight="1.0" prefWidth="327.0" style="-fx-background-color: #677381;" />
+                        <JFXButton fx:id="payAnother" layoutX="121.0" layoutY="379.0" onAction="#payAnotherClicked" prefHeight="36.0" prefWidth="144.0" style="-fx-border-color: #fcf876; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="Pay for another device" textFill="#9a9a81" />
                      </children></AnchorPane>
               </content>
             </Tab>

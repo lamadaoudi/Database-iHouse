@@ -22,24 +22,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -110,6 +101,8 @@ public class PayFXMLController implements Initializable {
     private Label DATE;
     @FXML
     private RadioButton WarrantyTog1;
+    @FXML
+    private JFXButton payAnother;
 
     /**
      * Initializes the controller class.
@@ -515,7 +508,7 @@ public class PayFXMLController implements Initializable {
     private void CheckBtnClick(ActionEvent event) throws ClassNotFoundException, SQLException {
         int flagNotProper = 0;
         Checkouttab.setDisable(false);
-        
+
         if (CardTog.isSelected()) {
             Method = CardTog.getText();
 
@@ -545,16 +538,16 @@ public class PayFXMLController implements Initializable {
                 alert.setTitle("Inconsistent Info");
                 alert.setContentText("This device has no warranty!");
                 alert.showAndWait();
-                flagNotProper=1;
+                flagNotProper = 1;
             } else {
                 Method = WarrantyTog1.getText();
             }
-        } else if (CashTog.isSelected() != true && CardTog.isSelected() != true && WarrantyTog1.isSelected()!=true) {
+        } else if (CashTog.isSelected() != true && CardTog.isSelected() != true && WarrantyTog1.isSelected() != true) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing Info");
             alert.setContentText("Please Select A Payment Mehtod");
             alert.showAndWait();
-            flagNotProper=1;
+            flagNotProper = 1;
         }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date todayDate = new Date();
@@ -643,7 +636,7 @@ public class PayFXMLController implements Initializable {
         }
         SQL = "insert into receipt values(" + "'" + df.format(todayDate) + "'" + "," + paymentno + "," + "'" + TotalInfo + "'" + ");";
         stmt.execute(SQL);
-        if (flagNotProper != 1){
+        if (flagNotProper != 1) {
             tabPane.getSelectionModel().selectNext();
         }
     }
@@ -654,6 +647,18 @@ public class PayFXMLController implements Initializable {
         Stage stage = (Stage) Exitbutton.getScene().getWindow();
         // do what you have to do
         stage.close();
+    }
+
+    @FXML
+    void payAnotherClicked(ActionEvent event) throws Exception {
+        tabPane.getSelectionModel().selectFirst();
+        Button1.setVisible(false);
+        Button2.setVisible(false);
+        Button3.setVisible(false);
+        Button4.setVisible(false);
+        Button5.setVisible(false);
+        Button6.setVisible(false);
+        OkbtnClick(new ActionEvent());
     }
 
 }
