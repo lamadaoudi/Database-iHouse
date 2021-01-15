@@ -233,7 +233,7 @@ public class SendToAppleBranchController implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Missing Info");
-            alert.setContentText("Please select a technician");
+            alert.setContentText("Please select an Apple Branch");
             alert.showAndWait();
         }
     }

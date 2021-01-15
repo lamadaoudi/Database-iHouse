@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -229,5 +230,22 @@
             </ImageView>
          </graphic>
       </Label>
+      <JFXDatePicker fx:id="datePickerFrom" defaultColor="#393e46" layoutX="458.0" layoutY="339.0" />
+      <JFXDatePicker fx:id="datePickerTo" defaultColor="#393e46" layoutX="771.0" layoutY="340.0" />
+      <Label alignment="TOP_CENTER" layoutX="352.0" layoutY="342.0" prefHeight="23.0" prefWidth="97.0" text="From Date">
+         <font>
+            <Font name="Calisto MT Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" layoutX="660.0" layoutY="343.0" prefHeight="23.0" prefWidth="97.0" text="To Date">
+         <font>
+            <Font name="Calisto MT Italic" size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnNumberOfJobs" alignment="TOP_LEFT" layoutX="963.0" layoutY="337.0" onAction="#numberJobsClicked" prefHeight="35.0" prefWidth="195.0" text="Number of Jobs:">
+         <font>
+            <Font name="Book Antiqua Italic" size="18.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

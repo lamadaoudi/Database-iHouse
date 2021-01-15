@@ -7,10 +7,15 @@ package database_ihouse_project_final_version;
 
 import Classes.RepairJob;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -70,7 +75,12 @@ public class FXMLDocumentController {
     private Label labelClosedRepairs;
     @FXML
     private Label labelFninishedJobs;
-
+    @FXML
+    private JFXDatePicker datePickerFrom;
+    @FXML
+    private JFXDatePicker datePickerTo;
+    @FXML
+    private JFXButton btnNumberOfJobs;
     @FXML
     void initialize() {
         try {
@@ -209,6 +219,9 @@ public class FXMLDocumentController {
         try {
             setBarChart();
             setLabelQueries();
+            datePickerFrom.getEditor().clear();
+            datePickerTo.getEditor().clear();
+            btnNumberOfJobs.setText("Number of jobs: ");
         } catch (Exception e) {
             System.out.println("Could not load the Bar Chart");
         }
@@ -226,6 +239,41 @@ public class FXMLDocumentController {
             primaryStage2.show();
         } catch (Exception e) {
             System.out.println("Could not load scene");
+        }
+    }
+
+    @FXML
+    private void numberJobsClicked(ActionEvent event) throws Exception {
+        if(datePickerFrom.getValue() != null && datePickerTo.getValue()!= null){
+            int count=0;
+            LocalDate localDate = datePickerFrom.getValue();
+            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            Date FROM = Date.from(instant);
+            LocalDate localDate2 = datePickerTo.getValue();
+            Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
+            Date TO = Date.from(instant2);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String fromString = df.format(FROM);
+            String toString = df.format(TO);
+            
+            String SQL = "select count(*) from repairJob R where R.recieved_date >= '"+fromString+"' AND R.recieved_date <= '"+toString+"';";
+            System.out.println(SQL);
+            MyConnection.connectDB();
+            Statement stmt = MyConnection.con.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+            try {
+                while (rs.next()) {
+                    count = Integer.parseInt(rs.getString(1));
+                }
+            } catch (Exception e) {
+                System.out.println("Error in reading data");
+            }
+            rs.close();
+            stmt.close();
+            btnNumberOfJobs.setText("Number of jobs: "+count);
+            rs.close();
+            stmt.close();
+            MyConnection.con.close();         
         }
     }
 

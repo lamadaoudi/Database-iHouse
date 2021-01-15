@@ -46,7 +46,7 @@ public class LoginFormController implements Initializable {
 
     @FXML
     private void btnLoginClicked(ActionEvent event) {
-                System.out.println(tfUsername.getText());
+        System.out.println(tfUsername.getText());
         if (tfUsername.getText().isEmpty() || tfUsername.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("An Input Field is Empty");
@@ -67,17 +67,12 @@ public class LoginFormController implements Initializable {
                 final Stage primaryStage2 = new Stage();
                 primaryStage2.initModality(Modality.APPLICATION_MODAL);
                 Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                System.out.println("Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();");
                 primaryStage2.initOwner(app_stage);
-                System.out.println("primaryStage2.initOwner(app_stage);");
                 Parent nextSceneParent = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-                System.out.println("Parent nextSceneParent = FXMLLoader.load(getClass().getResource(\"FXMLDocument.fxml\"));");
                 Scene scene11 = new Scene(nextSceneParent);
-                System.out.println("Scene scene11 = new Scene(nextSceneParent);");
                 primaryStage2.setScene(scene11);
-                System.out.println("primaryStage2.setScene(scene11);");
                 primaryStage2.show();
-                System.out.println(" primaryStage2.show();");
+
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Incorrect info");

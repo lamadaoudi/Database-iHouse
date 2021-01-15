@@ -140,7 +140,6 @@ public class RequestReplacementPartController implements Initializable {
                 }
             } catch (Exception e) {
                 System.out.println("Error In loop");
-                System.exit(1);
             }
             rs.close();
             stmt.close();
@@ -156,7 +155,7 @@ public class RequestReplacementPartController implements Initializable {
             
         }
         catch (Exception e){
-            System.out.println("Error in fetching data");
+            System.out.println("Could not fetch data");
         }
     }
     
@@ -174,8 +173,7 @@ public class RequestReplacementPartController implements Initializable {
                 data.add(Integer.parseInt(rs.getString(1)));
             }
         } catch (Exception e) {
-            System.out.println("Error In loop");
-            //System.exit(1);
+            System.out.println("Could not fetch data");
         }
         rs.close();
         stmt.close();
@@ -199,13 +197,11 @@ public class RequestReplacementPartController implements Initializable {
                 dataParts.add(new ReplacementParts(rs.getString(1),rs.getString(3),Integer.parseInt(rs.getString(2)), rs.getString(5), Double.parseDouble(rs.getString(4))));
             }
         } catch (Exception e) {
-            System.out.println("Error in reading data");
-            //System.exit(1);
+            System.out.println("Could not fetch data");
         }
         rs.close();
         stmt.close();
         MyConnection.con.close();
-
         System.out.println("Connection closed" + dataParts.size());
         dataList = FXCollections.observableArrayList(dataParts);
         System.out.println(dataList);

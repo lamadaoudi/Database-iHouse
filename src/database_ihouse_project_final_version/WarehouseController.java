@@ -5,8 +5,7 @@
  */
 package database_ihouse_project_final_version;
 
-import Classes.AppleBranch;
-import Classes.RepairJob;
+
 import Classes.ReplacementParts;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;

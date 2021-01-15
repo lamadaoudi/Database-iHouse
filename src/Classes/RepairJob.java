@@ -12,15 +12,16 @@ import java.util.Date;
  * @author Main
  */
 public class RepairJob {
-    String repair_id,job_status,recieved_date ,closed_date,technician_id ,branch_no ;
+    String repair_id,job_status,recieved_date ,closed_date,technician_id ,branch_no, customer_name ;
 
-    public RepairJob(String repair_id, String job_status, String recieved_date, String closed_date, String technician_id, String branch_no) {
+    public RepairJob(String repair_id, String customer_name, String job_status, String recieved_date, String closed_date, String technician_id, String branch_no) {
         this.repair_id = repair_id;
         this.job_status = job_status;
         this.recieved_date = recieved_date;
         this.closed_date = closed_date;
         this.technician_id = technician_id;
         this.branch_no = branch_no;
+        this.customer_name = customer_name;
     }
 
     public String getRepair_id() {
@@ -69,6 +70,10 @@ public class RepairJob {
 
     public void setBranch_no(String branch_no) {
         this.branch_no = branch_no;
+    }
+
+    public String getCustomer_name() {
+        return customer_name;
     }
 
     @Override

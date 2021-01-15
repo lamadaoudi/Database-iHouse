@@ -5,7 +5,6 @@
  */
 package database_ihouse_project_final_version;
 
-import Classes.AppleBranch;
 import Classes.RepairJob;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -27,7 +26,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -40,6 +38,8 @@ public class ActiveRepairJobsController implements Initializable {
     private TableView<RepairJob> tvActiveRepairJobs;
     @FXML
     private TableColumn<RepairJob, String> col_repair_id;
+    @FXML
+    private TableColumn<RepairJob, String> colCustomerID;
     @FXML
     private TableColumn<RepairJob, String> col_job_status;
     @FXML
@@ -117,13 +117,13 @@ public class ActiveRepairJobsController implements Initializable {
         String SQL;
         MyConnection.connectDB();
         System.out.println("Connection \n\n\n");
-        SQL = "select * from repairJob R where R.job_status<>'closed' and R.job_status<>'finished';";
+        SQL = "select R.repair_id, C.id_num, R.job_status, R.recieved_date, R.closed_date, R.technician_id, R.branch_no from repairJob R, custreqrep C  where R.repair_id = C.repair_id AND R.job_status<>'closed' and R.job_status<>'finished';";
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {
 
             while (rs.next()) {
-                RepairJobList.add(new RepairJob(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+                RepairJobList.add(new RepairJob(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
             }
         } catch (Exception e) {
             System.out.println("Error in reading data");
@@ -143,18 +143,13 @@ public class ActiveRepairJobsController implements Initializable {
         col_job_status.setCellValueFactory(new PropertyValueFactory<RepairJob, String>("Job_status"));
         col_technician_id.setCellValueFactory(new PropertyValueFactory<RepairJob, String>("Technician_id"));
         col_branch_no.setCellValueFactory(new PropertyValueFactory<RepairJob, String>("Branch_no"));
-        //tvActiveRepairJobs.setItems(dataList);
+        colCustomerID.setCellValueFactory(new PropertyValueFactory<RepairJob, String>("Customer_name"));
         search();
-        System.out.println("We're here now");
     }
 
     private void setTableEditable() {
         tvActiveRepairJobs.setEditable(true);
-        //col_branch_no.setCellFactory(TextFieldTableCell.<RepairJob>forTableColumn());
-        //col_closed_date.setCellFactory(TextFieldTableCell.<RepairJob>forTableColumn());
         col_job_status.setCellFactory(TextFieldTableCell.<RepairJob>forTableColumn());
-        //col_recieved_date.setCellFactory(TextFieldTableCell.<RepairJob>forTableColumn());
-        //col_repair_id.setCellFactory(TextFieldTableCell.<RepairJob>forTableColumn());
         col_technician_id.setCellFactory(TextFieldTableCell.<RepairJob>forTableColumn());
     }
     @FXML
@@ -186,7 +181,6 @@ public class ActiveRepairJobsController implements Initializable {
             MyConnection.con.close();
             getDataJobs();
             showDataJobs();
-            //search();
             System.out.println("Connection closed");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -240,8 +234,7 @@ public class ActiveRepairJobsController implements Initializable {
                 data.add(Integer.parseInt(rs.getString(1)));
             }
         } catch (Exception e) {
-            System.out.println("Error In loop");
-            //System.exit(1);
+            System.out.println("Could not fetch data");
         }
         rs.close();
         stmt.close();
@@ -259,7 +252,6 @@ public class ActiveRepairJobsController implements Initializable {
             MyConnection.con.close();
             getDataJobs();
             showDataJobs();
-            //search()
             System.out.println("Connection closed");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -301,5 +293,4 @@ public class ActiveRepairJobsController implements Initializable {
         }
     }    
     
-
 }

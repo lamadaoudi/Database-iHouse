@@ -202,7 +202,6 @@ public class AddRepairCustomerController implements Initializable {
             showTechnicians();
         } catch (Exception e) {
             e.printStackTrace();
-            //System.out.println("WHY IS THIS AN ERRORRRR");
         }
     }
 
@@ -250,8 +249,7 @@ public class AddRepairCustomerController implements Initializable {
                 data.add(Integer.parseInt(rs.getString(1)));
             }
         } catch (Exception e) {
-            System.out.println("Error In loop");
-            System.exit(1);
+            System.out.println("Could not read customers");
         }
         rs.close();
         stmt.close();
@@ -633,7 +631,6 @@ public class AddRepairCustomerController implements Initializable {
         "FROM Technician T, Employee E\n" +
         "WHERE T.id_num = E.id_num AND T.area_of_specialty='"+currentAreaOfSpecialty+"' AND T.id_num NOT IN\n" +
         "( SELECT R.technician_id FROM repairJob R WHERE R.technician_id AND (R.job_status<>'closed' AND R.job_status<>'finished'));";
-        System.out.println(SQL);
         Statement stmt = MyConnection.con.createStatement();
         ResultSet rs = stmt.executeQuery(SQL);
         try {
@@ -645,8 +642,7 @@ public class AddRepairCustomerController implements Initializable {
                         Integer.parseInt(rs.getString(3))));
             }
         } catch (Exception e) {
-            System.out.println("Error in reading data");
-            //System.exit(1);
+            System.out.println("Could not find technicians");
         }
         rs.close();
         stmt.close();
@@ -668,7 +664,6 @@ public class AddRepairCustomerController implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<AvailableTechnicians, String>("Technician_Name"));
         colNumberOfActiveJobs.setCellValueFactory(new PropertyValueFactory<AvailableTechnicians, Integer>("NumberOfActiveJobs"));
         technicianTV.setItems(dataList);
-        System.out.println("We're here now");
     }
             /**
      * ************************************************************************************************ TAB 4 DONE *******************************************************************************

@@ -98,10 +98,10 @@ public class RepairJobsArchiveController implements Initializable {
         try {
 
             while (rs.next()) {
-                ArchivedJobList.add(new RepairJob(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+                ArchivedJobList.add(new RepairJob(rs.getString(1), "0" , rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
             }
         } catch (Exception e) {
-            System.out.println("Error in reading data");
+            System.out.println("Could not load data");
         }
         rs.close();
         stmt.close();
@@ -210,7 +210,7 @@ public class RepairJobsArchiveController implements Initializable {
                 technician_name=rs.getString(6);
             }
         } catch (Exception e) {
-            System.out.println("Error in reading data");
+            System.out.println("Could not get data");
         }
         rs.close();
         stmt.close();
